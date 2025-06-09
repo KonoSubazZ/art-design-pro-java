@@ -29,8 +29,34 @@ import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class PermissionInterceptor extends SaInterceptor {
+
+  public static final List<String> OPEN_RESOURCES =
+      List.of(
+          "/",
+          "/api/iboot/auth/login",
+          "/api/iboot/auth/logout",
+          // 排除静态资源目录
+          "/static/**",
+          "/assets/**",
+          // 排除根目录下的静态文件
+          "/*.js",
+          "/*.css",
+          "/*.html",
+          "/*.ico",
+          "/*.png",
+          "/*.jpg",
+          "/*.jpeg",
+          "/*.gif",
+          "/*.svg",
+          "/*.woff",
+          "/*.woff2",
+          "/*.ttf",
+          "/*.json");
+
   public PermissionInterceptor() {
     super(
         handler -> {
@@ -39,28 +65,7 @@ public class PermissionInterceptor extends SaInterceptor {
               // 拦截的 path 列表，可以写多个 */
               .match("/**")
               // 不拦截以下接口（sa-token 不用加 serverContextPath 前缀但需要 / 开头）
-              .notMatch(
-                  "/",
-                  "/api/iboot/auth/login",
-                  "/api/iboot/auth/logout",
-                  // 排除静态资源目录
-                  "/static/**",
-                  "/assets/**",
-                  // 排除根目录下的静态文件
-                  "/*.js",
-                  "/*.css",
-                  "/*.html",
-                  "/*.ico",
-                  "/*.png",
-                  "/*.jpg",
-                  "/*.jpeg",
-                  "/*.gif",
-                  "/*.svg",
-                  "/*.woff",
-                  "/*.woff2",
-                  "/*.ttf",
-                  "/*.json"
-              )
+              .notMatch(OPEN_RESOURCES)
               // 要执行的校验动作，可以写完整的 lambda 表达式
               .check(r -> StpUtil.checkLogin());
 

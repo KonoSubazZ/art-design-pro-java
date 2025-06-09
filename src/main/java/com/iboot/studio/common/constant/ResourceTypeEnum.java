@@ -30,16 +30,16 @@ import lombok.Getter;
 @Getter
 public enum ResourceTypeEnum {
   /** 菜单 */
-  MENU(0, "菜单"),
+  MENU(0, "目录"),
 
   /** 按钮/接口 */
-  BUTTON(1, "按钮/接口"),
+  BUTTON(1, "按钮"),
 
   /** 链接 */
   LINK(2, "链接"),
 
   /** 页面 */
-  PAGE(3, "页面");
+  PAGE(3, "菜单");
 
   private final Integer code;
   private final String desc;

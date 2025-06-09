@@ -78,7 +78,7 @@ public class MenuUtil {
     }
 
     // 构建根节点菜单
-    return buildMenuTree("", parentChildrenMap, parentButtonMap);
+    return buildMenuTree("0", parentChildrenMap, parentButtonMap);
   }
 
   /**
