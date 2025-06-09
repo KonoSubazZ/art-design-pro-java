@@ -22,7 +22,7 @@
  * Author: tangsc.
  */
 
-package com.iboot.studio.common.config;
+package com.iboot.studio.infrastructure.integration.mybatisplus;
 
 import cn.hutool.core.lang.func.LambdaUtil;
 import com.iboot.studio.infrastructure.persistence.entity.BaseEntity;

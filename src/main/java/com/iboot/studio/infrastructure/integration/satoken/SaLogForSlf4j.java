@@ -22,7 +22,7 @@
  * Author: tangsc.
  */
 
-package com.iboot.studio.common.config.log;
+package com.iboot.studio.infrastructure.integration.satoken;
 
 import cn.dev33.satoken.log.SaLog;
 import org.slf4j.Logger;

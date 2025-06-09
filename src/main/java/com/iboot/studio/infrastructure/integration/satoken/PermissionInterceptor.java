@@ -22,7 +22,7 @@
  * Author: tangsc.
  */
 
-package com.iboot.studio.common.config;
+package com.iboot.studio.infrastructure.integration.satoken;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.router.SaRouter;

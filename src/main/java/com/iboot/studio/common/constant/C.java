@@ -28,8 +28,8 @@ package com.iboot.studio.common.constant;
 public class C {
   /**
    * 服务API路径（由于本项目旨在最小化部署资源需求，所以前端打包后的文件会直接放在 static 目录下，交由 SpringBoot 来进行 Server） 所以访问 后端 API Base
-   * 的路径为：<a href="http://localhost:8080/api/iboot">Server API Path</a> 而前端的访问路径为：<a
-   * href="http://localhost:8080/">前端API</a>
+   * 的路径为：<a href="http://localhost:18080/api/iboot">Server API Path</a> 而前端的访问路径为：<a
+   * href="http://localhost:18080/">前端API</a>
    * 如果前端使用 nginx 部署也不会有影响，因为 nginx 配置了反向代理，将前端的请求转发到后端的 API 路径下
    */
   public static final String SERVER_API_PATH = "api/iboot";
