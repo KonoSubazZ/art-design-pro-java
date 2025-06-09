@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Configuration 配置说明：
+    status="WARN" - 只显示 WARN 及以上级别的 Log4j2 内部日志
+    monitorInterval="30" - 每30秒检查一次配置文件变化，支持动态修改
+-->
+<Configuration status="WARN" monitorInterval="30">
+    <!-- 属性定义部分 -->
+    <Properties>
+        <!-- 
+            控制台日志格式说明：
+            %clr{...}{faint} - 使用浅色
+            %d{yyyy-MM-dd HH:mm:ss.SSS} - 时间戳
+            %5p - 日志级别，右对齐5个字符
+            ${sys:PID} - 进程ID
+            %15.15t - 线程名，最大15个字符
+            %-40.40c{1.} - 类名，最大40个字符
+            %m - 日志消息
+            %n - 换行符
+            %xwEx - 异常堆栈信息
+            %X{requestId} - 请求ID
+        -->
+        <Property name="CONSOLE_PATTERN">%clr{%X{requestId}}{yellow} %clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n%xwEx</Property>
+        
+        <!-- 
+            文件日志格式说明：
+            %d{yyyy-MM-dd HH:mm:ss.SSS} - 时间戳
+            [%thread] - 线程名
+            %-5level - 日志级别，左对齐5个字符
+            %logger{36} - 日志记录器名称，最长36个字符
+            %msg - 日志消息
+            %n - 换行符
+            %X{requestId} - 请求ID
+        -->
+        <Property name="FILE_PATTERN">%X{requestId} %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Property>
+        
+        <!-- 日志存储根目录 -->
+        <Property name="APP_LOG_ROOT">logs</Property>
+        
+        <!-- 应用名称，用于日志文件命名 -->
+        <Property name="APP_NAME">print-studio</Property>
+    </Properties>
+
+    <!-- 输出目标配置 -->
+    <Appenders>
+        <!-- 
+            控制台输出配置：
+            name="Console" - 输出目标名称
+            target="SYSTEM_OUT" - 输出到标准输出
+        -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${CONSOLE_PATTERN}"/>
+        </Console>
+
+        <!-- 
+            文件输出配置：
+            name="RollingFile" - 输出目标名称
+            fileName - 当前日志文件路径
+            filePattern - 历史日志文件命名模式
+        -->
+        <RollingFile name="RollingFile"
+                     fileName="${APP_LOG_ROOT}/${APP_NAME}.log"
+                     filePattern="${APP_LOG_ROOT}/${APP_NAME}-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <!-- 按天滚动策略：每天生成新文件 -->
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <!-- 按大小滚动策略：单个文件超过20MB时滚动 -->
+                <SizeBasedTriggeringPolicy size="20MB"/>
+            </Policies>
+            <!-- 最多保留30个历史文件 -->
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+    </Appenders>
+
+    <!-- 日志记录器配置 -->
+    <Loggers>
+        <!-- 
+            针对特定包的异步日志配置：
+            name="com.iboot.studio" - 包名
+            level="info" - 日志级别
+            additivity="false" - 防止日志重复输出
+        -->
+        <AsyncLogger name="com.iboot.studio" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </AsyncLogger>
+
+        <!-- 
+            根日志配置：
+            level="info" - 默认日志级别
+            影响所有未单独配置的包
+        -->
+        <AsyncRoot level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </AsyncRoot>
+    </Loggers>
+</Configuration>

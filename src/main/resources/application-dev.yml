@@ -1,0 +1,33 @@
+minioplus:
+  # MinIO 部署地址
+  backend: http://localhost:9000
+  # 浏览器访问地址，文件、图片上传下载访问地址代理，如果minio被nginx代理，需要配置这个参数为代理后的前端访问地址
+  #  browser-url: http://localhost:9000
+  # 授权key
+  key: PIAGx8e8TL9jryKBqW78
+  # 密钥
+  secret: vzbiOUKQJRAMlcnWQBPHMQSTENGlqxD2gWmDlfYw
+  # 桶名前缀，默认为空。如果多个SDK连接同一个minio后端服务，可以配置不同的前缀来区分。
+  # 可选参数，特殊字符不支持,需符合S3存储路径的命名规则，具体规则参考 https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html
+  bucket-prefix: liuxp
+  # 上传预签名URL有效期，单位为分钟，可选参数，默认值为60分钟
+  upload-expiry: 120
+  # 下载和预览预签名URL有效期，单位为分钟，可选参数，默认值为60分钟
+  download-expiry: 20
+  # 可选参数，分块配置
+  part:
+    # 可选参数，是否开启分块能力。默认为true
+    enable: true
+    # 可选参数，分块大小，配置单位为byte，默认为5242880
+    size: 5242880
+    # 可选参数，分块上传时建议并发数，默认为3
+    iis: 2
+  # 可选参数，缩略图配置
+  thumbnail:
+    # 可选参数，缩略图尺寸，默认为300
+    size: 300
+
+spring:
+  datasource:
+    url: jdbc:sqlite:D:\iboot-labs\art-design-pro\server-java\database\iboot.db
+    driver-class-name: org.sqlite.JDBC

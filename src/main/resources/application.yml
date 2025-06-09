@@ -1,0 +1,67 @@
+spring:
+  application:
+    name: print-studio
+  datasource:
+      hikari:
+        connection-test-query: SELECT 1 # 数据库连接测试
+        connection-init-sql: select  1 # 数据库连接测试
+
+server:
+  port: 18080
+
+sa-token:
+  # token 名称（同时也是 cookie 名称）
+  token-name: iboot
+  # token 有效期（单位：秒） 默认30天，-1 代表永久有效
+  timeout: 2592000
+  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+  active-timeout: -1
+  # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
+  is-concurrent: false
+  # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
+  is-share: false
+  # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
+  token-style: simple-uuid
+  # 是否输出操作日志
+  is-log: true
+
+concept:
+  download:
+    source:
+      cache:
+        enabled: true #网络资源缓存是否启用
+        #path: /source_cache #网络资源缓存路径，默认为 user.home/concept/download
+        delete: true #下载结束后网络资源缓存是否删除
+    compress:
+      format: zip #压缩格式
+      password: 123456 #压缩密码
+      cache:
+        enabled: true #压缩缓存是否启用
+        #path: /compress_cache #压缩缓存路径，默认为 user.home/concept/download
+        delete: true #下载结束后压缩缓存是否删除
+    logger:
+      enabled: true #日志总开关
+      standard:
+        enabled: false #标准流程日志是否启用
+      progress:
+        enabled: true #进度计算日志是否启用，包括加载进度，压缩进度，写入响应进度
+        duration: 500 #进度计算日志输出间隔，ms
+        percentage: true #进度计算日志是否使用百分比输出
+      time-spent:
+        enabled: true #时间计算日志是否启用
+
+log:
+  aop:
+    pointcut:
+      value: "execution(* com.iboot.studio.web.controller..*.*(..))"
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**.xml
+  configuration:
+    # MyBatis 配置
+    map-underscore-to-camel-case: true
+  global-config:
+    # 全局配置
+    db-config:
+      # 数据库配置
+      id-type: assign_id

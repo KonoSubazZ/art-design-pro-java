@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CoolRequestCookiePersistent">
+    <option name="cookies" value="[{&quot;domain&quot;:&quot;localhost:18080&quot;,&quot;infos&quot;:[{&quot;createTimeMillis&quot;:1749429965772,&quot;raw&quot;:&quot;iboot=81b567997fb849e0a193c86e1efecb32; Max-Age=2592000; Expires=Wed, 9 Jul 2025 08:46:05 +0800; Path=/&quot;,&quot;requestURL&quot;:&quot;http://localhost:18080/api/iboot/auth/login&quot;}]}]" />
+  </component>
+</project>
