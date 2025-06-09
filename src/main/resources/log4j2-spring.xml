@@ -38,7 +38,7 @@
         <Property name="APP_LOG_ROOT">logs</Property>
         
         <!-- 应用名称，用于日志文件命名 -->
-        <Property name="APP_NAME">print-studio</Property>
+        <Property name="APP_NAME">iboot-studio</Property>
     </Properties>
 
     <!-- 输出目标配置 -->

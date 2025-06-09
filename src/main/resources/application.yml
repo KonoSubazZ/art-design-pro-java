@@ -1,6 +1,6 @@
 spring:
   application:
-    name: print-studio
+    name: iboot-studio
   datasource:
       hikari:
         connection-test-query: SELECT 1 # 数据库连接测试

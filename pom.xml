@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.iboot</groupId>
-    <artifactId>print-studio</artifactId>
+    <artifactId>iboot-studio</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>print-studio-sqlite</name>
-    <description>print-studio</description>
+    <name>iboot-studio</name>
+    <description>iboot-studio</description>
     <url/>
     <licenses>
         <license/>
@@ -29,9 +29,8 @@
     <properties>
         <java.version>17</java.version>
         <hutool.version>5.8.38</hutool.version>
-        <htmlunit.version>4.12.0</htmlunit.version>
         <disruptor.version>3.4.4</disruptor.version>
-        <docker.repository>ibootio/print-studio</docker.repository>
+        <docker.repository>ibootio/iboot-studio</docker.repository>
         <docker.tag>sqlite-latest</docker.tag>
         <minio-plus.version>1.0.5</minio-plus.version>
         <magic-api.version>2.2.1</magic-api.version>
@@ -114,12 +113,6 @@
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
             <version>${disruptor.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.htmlunit</groupId>
-            <artifactId>htmlunit</artifactId>
-            <version>${htmlunit.version}</version>
         </dependency>
 
         <dependency>
