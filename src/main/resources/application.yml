@@ -1,3 +1,6 @@
+iboot-studio:
+  show-url: true
+
 spring:
   application:
     name: iboot-studio
