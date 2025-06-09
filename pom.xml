@@ -37,7 +37,7 @@
         <magic-api.version>2.2.1</magic-api.version>
         <concept-download.version>2.1.0</concept-download.version>
         <ulid-creator.version>5.2.3</ulid-creator.version>
-        <sa-token.version>1.43.0</sa-token.version>
+        <sa-token.version>1.44.0</sa-token.version>
         <mybatis-plus.version>3.5.12</mybatis-plus.version>
         <sqlite.version>3.49.1.0</sqlite.version>
     </properties>
@@ -84,18 +84,6 @@
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.woo</groupId>
-            <artifactId>htmltopdf</artifactId>
-            <version>1.0.8</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itextpdf</artifactId>
-            <version>5.5.13.4</version>
         </dependency>
 
         <dependency>
