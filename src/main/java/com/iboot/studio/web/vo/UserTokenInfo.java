@@ -42,9 +42,6 @@ public class UserTokenInfo {
   /** 角色列表 */
   private List<String> roles;
 
-  /** 权限列表 */
-  private List<String> buttons;
-
   /** sa-token 登录信息 */
   private SaTokenInfo saTokenInfo;
 }

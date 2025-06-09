@@ -29,17 +29,13 @@ import lombok.Getter;
 /** 资源类型枚举 */
 @Getter
 public enum ResourceTypeEnum {
-  /** 菜单 */
-  MENU(0, "目录"),
+  DIRECTORY(0, "目录"),
 
-  /** 按钮/接口 */
   BUTTON(1, "按钮"),
 
-  /** 链接 */
   LINK(2, "链接"),
 
-  /** 页面 */
-  PAGE(3, "菜单");
+  MENU(3, "菜单");
 
   private final Integer code;
   private final String desc;
@@ -47,25 +43,5 @@ public enum ResourceTypeEnum {
   ResourceTypeEnum(Integer code, String desc) {
     this.code = code;
     this.desc = desc;
-  }
-
-  /**
-   * 根据code获取枚举
-   *
-   * @param code 类型码
-   * @return 对应的枚举，如果不存在返回null
-   */
-  public static ResourceTypeEnum getByCode(Integer code) {
-    if (code == null) {
-      return null;
-    }
-
-    for (ResourceTypeEnum type : values()) {
-      if (type.getCode().equals(code)) {
-        return type;
-      }
-    }
-
-    return null;
   }
 }

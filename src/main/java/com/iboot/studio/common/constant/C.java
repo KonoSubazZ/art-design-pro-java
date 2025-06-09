@@ -32,7 +32,7 @@ public class C {
    * href="http://localhost:18080/">前端API</a>
    * 如果前端使用 nginx 部署也不会有影响，因为 nginx 配置了反向代理，将前端的请求转发到后端的 API 路径下
    */
-  public static final String SERVER_API_PATH = "api/iboot";
+  public static final String SERVER_API_PATH = "/api/iboot";
 
   private C() {}
 }

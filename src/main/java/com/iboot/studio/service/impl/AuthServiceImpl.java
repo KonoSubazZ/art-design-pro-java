@@ -96,8 +96,6 @@ public class AuthServiceImpl implements AuthService {
 
     // 准备返回用户信息及token
     UserTokenInfo userTokenInfo = BeanUtil.toBean(user, UserTokenInfo.class);
-    userTokenInfo.setSaTokenInfo(tokenInfo);
-    userTokenInfo.setButtons(StpUtil.getPermissionList(userId));
     userTokenInfo.setRoles(StpUtil.getRoleList(userId));
 
     return userTokenInfo;
