@@ -1,18 +1,15 @@
 package com.iboot.studio.web.controller;
 
+import static com.iboot.studio.common.constant.C.SERVER_API_PATH;
+
 import cn.hutool.core.util.StrUtil;
 import com.iboot.studio.common.enumdict.EnumDictCollector;
-import org.springframework.util.StringUtils;
+import java.util.List;
+import java.util.Objects;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
-import static com.iboot.studio.common.constant.C.SERVER_API_PATH;
 
 @RestController
 @RequestMapping(SERVER_API_PATH + "/enums")

@@ -24,9 +24,14 @@
 
 package com.iboot.studio.web.controller;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.iboot.studio.common.constant.R;
+import com.iboot.studio.infrastructure.persistence.entity.User;
 import com.iboot.studio.service.AuthService;
+import com.iboot.studio.service.UserService;
 import com.iboot.studio.web.vo.UserTokenInfo;
+import com.iboot.studio.web.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,10 +44,19 @@ import static com.iboot.studio.common.constant.C.SERVER_API_PATH;
 @RequiredArgsConstructor
 public class UserController {
   private final AuthService authService;
+  private final UserService userService;
 
   @GetMapping("/info")
   public R<UserTokenInfo> getUserInfo() {
     UserTokenInfo userTokenInfo = authService.getUserInfo();
     return R.success(userTokenInfo);
+  }
+
+  @GetMapping("/page")
+  public R<Page<UserVO>> getUserPage() {
+    Page<User> page = userService.page(new Page<>());
+    Page<UserVO> userVOPage = BeanUtil.toBean(page, Page.class);
+    userVOPage.setRecords(BeanUtil.copyToList(page.getRecords(), UserVO.class));
+    return R.success(userVOPage);
   }
 }
