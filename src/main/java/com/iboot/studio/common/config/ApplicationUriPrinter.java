@@ -4,6 +4,7 @@ import com.iboot.studio.common.util.PathUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import java.net.UnknownHostException;
 @Component
 @ConditionalOnProperty(name = "iboot-studio.show-url", havingValue = "true", matchIfMissing = true)
 @Order
+@DependsOn("DBPropertyDataConfig")
 public class ApplicationUriPrinter implements CommandLineRunner {
 
   @Value("${server.port:18080}")

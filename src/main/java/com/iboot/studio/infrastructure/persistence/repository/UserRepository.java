@@ -22,11 +22,11 @@
  * Author: tangsc.
  */
 
-package com.iboot.studio.infrastructure.persistence.mapper;
+package com.iboot.studio.infrastructure.persistence.repository;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.iboot.studio.infrastructure.persistence.entity.User;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserMapper extends BaseMapper<User> {}
+public interface UserRepository extends BaseMapper<User> {}

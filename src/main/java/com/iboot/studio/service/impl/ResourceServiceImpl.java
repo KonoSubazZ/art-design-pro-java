@@ -26,10 +26,10 @@ package com.iboot.studio.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.iboot.studio.infrastructure.persistence.entity.Resource;
-import com.iboot.studio.infrastructure.persistence.mapper.ResourceMapper;
+import com.iboot.studio.infrastructure.persistence.repository.ResourceRepository;
 import com.iboot.studio.service.ResourceService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource>
+public class ResourceServiceImpl extends ServiceImpl<ResourceRepository, Resource>
     implements ResourceService {}

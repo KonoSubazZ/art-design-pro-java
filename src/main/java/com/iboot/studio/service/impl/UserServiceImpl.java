@@ -26,9 +26,9 @@ package com.iboot.studio.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.iboot.studio.infrastructure.persistence.entity.User;
-import com.iboot.studio.infrastructure.persistence.mapper.UserMapper;
+import com.iboot.studio.infrastructure.persistence.repository.UserRepository;
 import com.iboot.studio.service.UserService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {}
+public class UserServiceImpl extends ServiceImpl<UserRepository, User> implements UserService {}
