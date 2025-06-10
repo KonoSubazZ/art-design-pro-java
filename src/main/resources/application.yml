@@ -1,5 +1,8 @@
 iboot-studio:
   show-url: true
+  enum-dict:
+    enabled: true
+    scan-packages: com.iboot.studio.common.constant,com.iboot.studio.other.package
 
 spring:
   application:

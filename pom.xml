@@ -39,6 +39,7 @@
         <sa-token.version>1.44.0</sa-token.version>
         <mybatis-plus.version>3.5.12</mybatis-plus.version>
         <sqlite.version>3.49.1.0</sqlite.version>
+        <lombok.version>1.18.24</lombok.version>
     </properties>
     <dependencies>
         <!-- 排除 Spring Boot 默认的 Logback 依赖 -->
@@ -160,11 +161,20 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
                 <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>com.iboot.studio</groupId>
+                            <artifactId>server-java</artifactId>
+                            <version>${project.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
