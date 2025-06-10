@@ -26,6 +26,7 @@ package com.iboot.studio.infrastructure.persistence.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import lombok.Data;
 
@@ -40,6 +41,7 @@ public class BaseEntity {
   private String creatorName;
 
   /** 创建时间 */
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
   @TableField(value = "create_time")
   private LocalDateTime createTime;
 
@@ -52,6 +54,7 @@ public class BaseEntity {
   private String updaterName;
 
   /** 修改时间 */
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
   @TableField(value = "update_time", fill = FieldFill.UPDATE)
   private LocalDateTime updateTime;
 }
