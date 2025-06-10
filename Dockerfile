@@ -11,6 +11,8 @@ ENV TZ=Asia/Shanghai
 ARG JAR_FILE
 COPY ${JAR_FILE} app.jar
 
+COPY database/iboot.db  database/iboot.db
+
 # 暴露端口
 EXPOSE 18080
 

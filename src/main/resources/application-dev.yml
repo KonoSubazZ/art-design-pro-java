@@ -29,5 +29,5 @@ minioplus:
 
 spring:
   datasource:
-    url: jdbc:sqlite:D:\iboot-labs\art-design-pro\server-java\database\iboot.db
+    url: jdbc:sqlite:database/iboot.db
     driver-class-name: org.sqlite.JDBC
