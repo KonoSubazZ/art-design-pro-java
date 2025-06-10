@@ -43,6 +43,7 @@ public class PermissionInterceptor extends SaInterceptor {
           // 排除静态资源目录
           "/static/**",
           "/assets/**",
+          "/iboot/**",
           // 排除根目录下的静态文件
           "/*.js",
           "/*.css",
