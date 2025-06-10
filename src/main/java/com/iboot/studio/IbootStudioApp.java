@@ -24,12 +24,10 @@
 
 package com.iboot.studio;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.iboot.studio.infrastructure.persistence.mapper")
 public class IbootStudioApp {
 
   public static void main(String[] args) {

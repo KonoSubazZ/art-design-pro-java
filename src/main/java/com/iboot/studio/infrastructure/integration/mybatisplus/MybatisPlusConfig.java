@@ -3,12 +3,15 @@ package com.iboot.studio.infrastructure.integration.mybatisplus;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.iboot.studio.infrastructure.integration.minioplus.MetadataRepositoryImpl;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MapperScan("com.iboot.studio.infrastructure.persistence.repository")
+@MapperScan(
+    value = {"com.iboot.studio.infrastructure.persistence.repository"},
+    basePackageClasses = {MetadataRepositoryImpl.class})
 public class MybatisPlusConfig {
 
   @Bean
