@@ -37,6 +37,7 @@ public class PermissionInterceptor extends SaInterceptor {
   public static final List<String> OPEN_RESOURCES =
       List.of(
           "/",
+          "/api/iboot/sys/public/data-config",
           "/api/iboot/auth/login",
           "/api/iboot/auth/logout",
           // 排除静态资源目录

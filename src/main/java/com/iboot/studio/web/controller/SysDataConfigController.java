@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(SERVER_API_PATH + "/sys-data-config")
+@RequestMapping(SERVER_API_PATH + "/sys")
 public class SysDataConfigController {
 	private final SysDataConfigService sysDataConfigService;
-  @GetMapping("/public")
+  @GetMapping("/public/data-config")
   public R<Object> getPublicData(@RequestParam String dataKey) {
 	  Assert.notNull(dataKey, "dataKey不能为空");
 	  Object data = sysDataConfigService.getPublicData(dataKey);
