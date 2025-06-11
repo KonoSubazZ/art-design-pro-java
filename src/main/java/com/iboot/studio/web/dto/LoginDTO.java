@@ -36,4 +36,9 @@ public class LoginDTO {
   /** 密码 */
   @NotBlank(message = "密码不能为空")
   private String password;
+
+  /**
+   * 记住密码
+   */
+  private Boolean rememberPassword;
 }

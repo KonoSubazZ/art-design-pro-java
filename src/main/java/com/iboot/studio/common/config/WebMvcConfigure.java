@@ -77,7 +77,7 @@ public class WebMvcConfigure implements WebMvcConfigurer {
       }
 
       // 2. 允许携带凭证（cookies等）
-      res.setHeader("Access-Control-Allow-Credentials", "true");
+      res.setHeader("Access-Control-Allow-Credentials", "false");
 
       // 3. 其他必要配置保持不变
       res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
@@ -86,8 +86,7 @@ public class WebMvcConfigure implements WebMvcConfigurer {
           .setHeader(
               "Access-Control-Allow-Headers",
               // 先允许所有的请求头 不然对接各种前端的时候会报跨域错误
-              // "content-type, authorization, x-requested-with, Content-Type, iboot,
-              // platform");
+              // "content-type, authorization, x-requested-with, content-type, platform");
               "*");
       // 预检请求直接返回
       SaRouter.match(SaHttpMethod.OPTIONS).free(r -> {}).back();

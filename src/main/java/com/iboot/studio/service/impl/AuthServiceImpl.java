@@ -59,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
     Assert.isTrue(StrUtil.equals(user.getPassword(), loginDTO.getPassword()), "用户不存在或密码错误");
 
     // 用户存在且密码匹配，生成token
-    StpUtil.login(user.getUserId());
+    StpUtil.login(user.getUserId(), loginDTO.getRememberPassword());
 
     // 获取token并赋值
     SaTokenInfo saTokenInfo = StpUtil.getTokenInfo();
