@@ -1,4 +1,4 @@
-package com.iboot.studio.config;
+package com.iboot.studio.common.config;
 
 import com.iboot.studio.infrastructure.persistence.entity.SysDataConfig;
 import com.iboot.studio.infrastructure.persistence.repository.SysDataConfigRepository;

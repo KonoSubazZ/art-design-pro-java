@@ -83,8 +83,12 @@ public class WebMvcConfigure implements WebMvcConfigurer {
       res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
           .setHeader("Access-Control-Max-Age", "3600")
           // 显式列出允许的请求头，包括 content-type 和其他可能用到的头
-          .setHeader("Access-Control-Allow-Headers", "content-type, authorization, x-requested-with, iboot, Content-Type");
-
+          .setHeader(
+              "Access-Control-Allow-Headers",
+              // 先允许所有的请求头 不然对接各种前端的时候会报跨域错误
+              // "content-type, authorization, x-requested-with, Content-Type, iboot,
+              // platform");
+              "*");
       // 预检请求直接返回
       SaRouter.match(SaHttpMethod.OPTIONS).free(r -> {}).back();
     };
