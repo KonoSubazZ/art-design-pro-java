@@ -22,17 +22,18 @@
  * Author: tangsc.
  */
 
-package com.iboot.studio.service.impl;
+package com.iboot.studio.infrastructure.integration.satoken;
 
 import cn.dev33.satoken.stp.StpInterface;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
 import com.google.common.collect.Lists;
 import com.iboot.studio.infrastructure.persistence.entity.Resource;
+import com.iboot.studio.infrastructure.persistence.entity.Role;
 import com.iboot.studio.infrastructure.persistence.entity.User;
 import com.iboot.studio.service.ResourceService;
+import com.iboot.studio.service.RoleService;
 import com.iboot.studio.service.UserService;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,7 @@ import org.springframework.util.Assert;
 public class PermissionImpl implements StpInterface {
   private final UserService userService;
   private final ResourceService resourceService;
+  private final RoleService roleService;
 
   @Override
   public List<String> getPermissionList(Object loginId, String loginType) {
@@ -71,19 +73,22 @@ public class PermissionImpl implements StpInterface {
     }
 
     // 获取角色所具有的权限码
-    permissionList.add("user.add");
-    permissionList.add("user.update");
-    permissionList.add("user.get");
-    permissionList.add("art.*");
-    return permissionList;
+    List<Resource> resources = resourceService.listByRoleList(roleList);
+    permissionList = resources.stream().map(Resource::getResourceCode).collect(Collectors.toList());
+    return CollUtil.isNotEmpty(permissionList) ? permissionList : Lists.newArrayList();
   }
 
   @Override
   public List<String> getRoleList(Object loginId, String loginType) {
-    // 本 list 仅做模拟，实际项目中要根据具体业务逻辑来查询角色
-    List<String> list = new ArrayList<String>();
-    list.add("admin");
-    list.add("super-admin");
-    return list;
+    List<Role> roles;
+    User user = userService.getById(Convert.toStr(loginId));
+    Assert.notNull(user, "用户不存在:" + loginId);
+
+    if (user.getIsSuperAdmin()) {
+      roles = roleService.list();
+      return roles.stream().map(Role::getRoleCode).toList();
+    }
+    roles = roleService.listByUserId(loginId);
+    return roles.stream().map(Role::getRoleCode).toList();
   }
 }

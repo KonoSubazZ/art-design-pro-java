@@ -22,13 +22,20 @@
  * Author: tangsc.
  */
 
-package com.iboot.studio.service;
+package com.iboot.studio.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.iboot.studio.infrastructure.persistence.entity.Resource;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.iboot.studio.infrastructure.persistence.entity.Role;
+import com.iboot.studio.infrastructure.persistence.repository.RoleRepository;
+import com.iboot.studio.service.RoleService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface ResourceService extends IService<Resource> {
-	List<Resource> listByRoleList(List<String> roleList);
+@Service
+public class RoleServiceImpl extends ServiceImpl<RoleRepository, Role> implements RoleService {
+	@Override
+	public List<Role> listByUserId(Object userId) {
+		return this.baseMapper.listByUserId(userId);
+	}
 }

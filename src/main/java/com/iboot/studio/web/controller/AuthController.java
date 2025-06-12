@@ -24,6 +24,8 @@
 
 package com.iboot.studio.web.controller;
 
+import static com.iboot.studio.common.constant.Const.SERVER_API_PATH;
+
 import cn.dev33.satoken.stp.StpUtil;
 import com.iboot.studio.common.constant.R;
 import com.iboot.studio.service.AuthService;
@@ -34,8 +36,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import static com.iboot.studio.common.constant.C.SERVER_API_PATH;
 
 @RestController
 @RequestMapping(SERVER_API_PATH +"/auth")

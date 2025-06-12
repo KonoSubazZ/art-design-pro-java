@@ -1,6 +1,6 @@
 package com.iboot.studio.web.controller;
 
-import static com.iboot.studio.common.constant.C.SERVER_API_PATH;
+import static com.iboot.studio.common.constant.Const.SERVER_API_PATH;
 
 import cn.hutool.core.util.StrUtil;
 import com.iboot.studio.common.enumdict.EnumDictCollector;

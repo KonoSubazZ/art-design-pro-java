@@ -83,6 +83,7 @@ public class AuthServiceImpl implements AuthService {
 
     // 获取用户所拥有的角色
     List<String> roleList = StpUtil.getRoleList(userId);
+    resources = resourceService.listByRoleList(roleList);
     // 根据角色获取角色所拥有的菜单
     return MenuUtil.generateUserMenus(resources);
   }

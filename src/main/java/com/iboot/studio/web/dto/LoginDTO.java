@@ -40,5 +40,5 @@ public class LoginDTO {
   /**
    * 记住密码
    */
-  private Boolean rememberPassword;
+  private Boolean rememberPassword = true;
 }

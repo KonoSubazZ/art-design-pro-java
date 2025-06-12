@@ -26,7 +26,12 @@ package com.iboot.studio.infrastructure.persistence.repository;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.iboot.studio.infrastructure.persistence.entity.Resource;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface ResourceRepository extends BaseMapper<Resource> {}
+public interface ResourceRepository extends BaseMapper<Resource> {
+	List<Resource> listByRoleList(@Param("roleList") List<String> roleList);
+}

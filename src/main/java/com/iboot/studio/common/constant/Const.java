@@ -22,48 +22,17 @@
  * Author: tangsc.
  */
 
-package com.iboot.studio.common.util;
+package com.iboot.studio.common.constant;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+/** 全局通用常量类 */
+public class Const {
+  /**
+   * 服务API路径（由于本项目旨在最小化部署资源需求，所以前端打包后的文件会直接放在 static 目录下，交由 SpringBoot 来进行 Server） 所以访问 后端 API Base
+   * 的路径为：<a href="http://localhost:18080/api/iboot">Server API Path</a> 而前端的访问路径为：<a
+   * href="http://localhost:18080/">前端API</a>
+   * 如果前端使用 nginx 部署也不会有影响，因为 nginx 配置了反向代理，将前端的请求转发到后端的 API 路径下
+   */
+  public static final String SERVER_API_PATH = "/api/iboot";
 
-/** 日志工具类 */
-public class LogUtil {
-  private static final Logger logger = LogManager.getLogger(LogUtil.class);
-
-  public static void info(String message) {
-    logger.info(message);
-  }
-
-  public static void info(String message, Object... params) {
-    logger.info(message, params);
-  }
-
-  public static void error(String message) {
-    logger.error(message);
-  }
-
-  public static void error(String message, Throwable throwable) {
-    logger.error(message, throwable);
-  }
-
-  public static void error(String message, Object... params) {
-    logger.error(message, params);
-  }
-
-  public static void warn(String message) {
-    logger.warn(message);
-  }
-
-  public static void warn(String message, Object... params) {
-    logger.warn(message, params);
-  }
-
-  public static void debug(String message) {
-    logger.debug(message);
-  }
-
-  public static void debug(String message, Object... params) {
-    logger.debug(message, params);
-  }
+  private Const() {}
 }

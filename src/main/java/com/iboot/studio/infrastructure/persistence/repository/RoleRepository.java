@@ -22,13 +22,16 @@
  * Author: tangsc.
  */
 
-package com.iboot.studio.service;
+package com.iboot.studio.infrastructure.persistence.repository;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.iboot.studio.infrastructure.persistence.entity.Resource;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.iboot.studio.infrastructure.persistence.entity.Role;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface ResourceService extends IService<Resource> {
-	List<Resource> listByRoleList(List<String> roleList);
+@Repository
+public interface RoleRepository extends BaseMapper<Role> {
+	List<Role> listByUserId(@Param("userId") Object userId);
 }

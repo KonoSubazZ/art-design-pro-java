@@ -30,6 +30,13 @@ import com.iboot.studio.infrastructure.persistence.repository.ResourceRepository
 import com.iboot.studio.service.ResourceService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ResourceServiceImpl extends ServiceImpl<ResourceRepository, Resource>
-    implements ResourceService {}
+    implements ResourceService {
+  @Override
+  public List<Resource> listByRoleList(List<String> roleList) {
+    return this.baseMapper.listByRoleList(roleList);
+  }
+}

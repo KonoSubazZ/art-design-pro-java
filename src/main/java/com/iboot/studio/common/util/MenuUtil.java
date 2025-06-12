@@ -28,11 +28,8 @@ import cn.hutool.core.bean.BeanUtil;
 import com.iboot.studio.common.constant.ResourceTypeEnum;
 import com.iboot.studio.infrastructure.persistence.entity.Resource;
 import com.iboot.studio.web.vo.UserMenu;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 public class MenuUtil {
 
@@ -95,7 +92,7 @@ public class MenuUtil {
       Map<String, List<Resource>> parentButtonMap) {
     List<Resource> children = parentChildrenMap.get(parentId);
     if (children == null || children.isEmpty()) {
-      return new ArrayList<>();
+      return Collections.emptyList();
     }
 
     List<UserMenu> menuList = new ArrayList<>();
