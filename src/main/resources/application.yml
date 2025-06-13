@@ -1,5 +1,5 @@
 iboot-studio:
-  show-url: true
+  show-server-url: true
   enum-dict:
     enabled: true
     scan-packages: com.iboot.studio.common.constant,com.iboot.studio.other.package

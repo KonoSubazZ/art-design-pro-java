@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 @Order
 @DependsOn("DBPropertyDataConfig")
 public class ApplicationUriPrinter implements CommandLineRunner {
-  @Value("${iboot-studio.show-url:true}")
-  private Boolean showUrl;
+  @Value("${iboot-studio.show-server-url:true}")
+  private Boolean showServerUrl;
 
   @Value("${server.port:18080}")
   private int port;
@@ -25,7 +25,7 @@ public class ApplicationUriPrinter implements CommandLineRunner {
 
   @Override
   public void run(String... args) {
-    if (!showUrl) {
+    if (!showServerUrl) {
       return;
     }
     System.out.println(
