@@ -120,26 +120,47 @@ public class EnumDictCollector {
 
   private void findEnumClassesInDirectory(
       java.io.File directory, String packageName, Set<Class<?>> result) {
+    if (directory == null || !directory.exists()) {
+      return;
+    }
+
     File[] files = directory.listFiles();
     if (files == null) {
       return;
     }
+
     for (File file : files) {
       if (file.isDirectory()) {
-        findEnumClassesInDirectory(file, packageName + "." + file.getName(), result);
-      } else if (file.getName().endsWith(".class")) {
-        String className =
-            packageName + "." + file.getName().substring(0, file.getName().length() - 6);
-        try {
-          Class<?> clazz = Class.forName(className);
-          if (clazz.isEnum() && clazz.isAnnotationPresent(EnumDict.class)) {
-            result.add(clazz);
-          }
-        } catch (ClassNotFoundException e) {
-          // 忽略找不到的类
-        }
+        processDirectory(file, packageName, result);
+      } else {
+        processClassFile(file, packageName, result);
       }
     }
+  }
+
+  private void processDirectory(File directory, String packageName, Set<Class<?>> result) {
+    String newPackageName = packageName + "." + directory.getName();
+    findEnumClassesInDirectory(directory, newPackageName, result);
+  }
+
+  private void processClassFile(File file, String packageName, Set<Class<?>> result) {
+    if (!file.getName().endsWith(".class")) {
+      return;
+    }
+
+    String className = packageName + "." + file.getName().replace(".class", "");
+    try {
+      Class<?> clazz = Class.forName(className);
+      if (isValidEnumDict(clazz)) {
+        result.add(clazz);
+      }
+    } catch (ClassNotFoundException e) {
+      // 忽略找不到的类
+    }
+  }
+
+  private boolean isValidEnumDict(Class<?> clazz) {
+    return clazz.isEnum() && clazz.isAnnotationPresent(EnumDict.class);
   }
 
   public List<EnumDictInfo> getAllEnumDicts() {
