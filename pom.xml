@@ -39,6 +39,7 @@
         <sa-token.version>1.44.0</sa-token.version>
         <mybatis-plus.version>3.5.12</mybatis-plus.version>
         <mybatis-plus-join.version>1.5.3</mybatis-plus-join.version>
+        <bean-searcher.version>4.4.1</bean-searcher.version>
         <sqlite.version>3.49.1.0</sqlite.version>
         <lombok.version>1.18.24</lombok.version>
     </properties>
@@ -77,6 +78,12 @@
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
             <version>${sqlite.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.zhxu</groupId>
+            <artifactId>bean-searcher-boot-starter</artifactId>
+            <version>${bean-searcher.version}</version>
         </dependency>
 
         <dependency>
