@@ -38,6 +38,6 @@ public class DBPropertyDataConfig {
     MapPropertySource mapPropertySource = new MapPropertySource("db_data_config", propertyMap);
     // 将数据库配置源添加到配置源列表首位，优先级最高
     sources.addFirst(mapPropertySource);
-    log.info("加载数据库配置项完成, 配置数据：{}", JacksonUtil.toJsonStr(mapPropertySource));
+    log.info("加载数据库配置项完成, 数据库配置数据源：{}", JacksonUtil.toJsonStr(mapPropertySource));
   }
 }

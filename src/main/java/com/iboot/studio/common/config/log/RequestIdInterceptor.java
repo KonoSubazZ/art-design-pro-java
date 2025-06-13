@@ -25,7 +25,7 @@
 package com.iboot.studio.common.config.log;
 
 import cn.hutool.core.text.CharSequenceUtil;
-import com.github.f4b6a3.ulid.UlidCreator;
+import com.iboot.studio.common.util.IdUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jetbrains.annotations.NotNull;
@@ -48,7 +48,7 @@ public class RequestIdInterceptor implements HandlerInterceptor {
     String requestId = request.getHeader(REQUEST_ID_HEADER);
     // 如果请求头中没有，则生成新的单调递增ULID
     if (CharSequenceUtil.isEmpty(requestId)) {
-      requestId = UlidCreator.getMonotonicUlid().toLowerCase();
+      requestId = IdUtil.getMonotonicUlid();
     }
     // 将请求ID放入MDC
     MDC.put(REQUEST_ID, requestId);

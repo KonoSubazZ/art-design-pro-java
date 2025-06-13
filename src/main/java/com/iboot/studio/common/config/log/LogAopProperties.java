@@ -25,17 +25,27 @@
 package com.iboot.studio.common.config.log;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Role;
 
 @Data
+@Slf4j
 @Configuration
+@ConfigurationProperties(prefix = "iboot-studio.log.aop")
 @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
-public class AopProperties {
+public class LogAopProperties {
+  /** 是否启用 */
+  private boolean enabled = true;
 
-  /** 日志切面切入点表达式 */
-  @Value("${iboot-studio.log.aop.pointcut.value}")
-  private String value;
+  /** 切点配置 */
+  private Pointcut pointcut = new Pointcut();
+
+  @Data
+  public static class Pointcut {
+    /** 日志切面切入点表达式 */
+    private String value;
+  }
 }

@@ -41,11 +41,11 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 
 @Slf4j
 public class LogAdviceHandler implements MethodInterceptor {
-
   ThreadLocal<StopWatch> stopWatchLocal = new ThreadLocal<>();
 
   @Override
   public Object invoke(MethodInvocation invocation) throws Throwable {
+    log.debug("开始执行方法：{}#{}", invocation.getThis().getClass().getName(),invocation.getMethod().getName());
     // 执行前
     StopWatch clock = new StopWatch(String.valueOf(System.currentTimeMillis()));
     clock.start();
@@ -78,9 +78,11 @@ public class LogAdviceHandler implements MethodInterceptor {
     requestLog.setCURL(WebUtil.buildCURL(requestLog));
 
     log.info("请求信息: {}", JacksonUtil.toJsonStr(requestLog));
+    log.debug("请求详情: {}", requestLog);
 
     // 执行方法
     Object result = invocation.proceed();
+    log.debug("方法执行完成，结果：{}", result);
 
     // 执行后
     clock = stopWatchLocal.get();
