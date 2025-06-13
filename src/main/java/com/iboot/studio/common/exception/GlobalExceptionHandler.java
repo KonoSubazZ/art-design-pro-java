@@ -30,6 +30,7 @@ import com.iboot.studio.common.constant.ResponseCode;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -85,11 +86,13 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(IllegalArgumentException.class)
   @ResponseStatus(HttpStatus.OK)
   public R<Void> handleIllegalArgumentException(IllegalArgumentException e) {
-    log.error("内部参数异常: {}", e.getMessage());
+    String stackTrace = ExceptionUtils.getStackTrace(e);
+    log.error("内部参数异常: {}", stackTrace);
+
     return R.failed(
         ResponseCode.BAD_REQUEST,
-        "参数错误:" + e.getMessage(),
-        ExceptionUtil.getRootCauseMessage(e),
+        e.getMessage(),
+        stackTrace,
         null);
   }
 
