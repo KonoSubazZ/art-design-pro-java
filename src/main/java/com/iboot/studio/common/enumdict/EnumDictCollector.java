@@ -121,21 +121,22 @@ public class EnumDictCollector {
   private void findEnumClassesInDirectory(
       java.io.File directory, String packageName, Set<Class<?>> result) {
     File[] files = directory.listFiles();
-    if (files != null) {
-      for (File file : files) {
-        if (file.isDirectory()) {
-          findEnumClassesInDirectory(file, packageName + "." + file.getName(), result);
-        } else if (file.getName().endsWith(".class")) {
-          String className =
-              packageName + "." + file.getName().substring(0, file.getName().length() - 6);
-          try {
-            Class<?> clazz = Class.forName(className);
-            if (clazz.isEnum() && clazz.isAnnotationPresent(EnumDict.class)) {
-              result.add(clazz);
-            }
-          } catch (ClassNotFoundException e) {
-            // 忽略找不到的类
+    if (files == null) {
+      return;
+    }
+    for (File file : files) {
+      if (file.isDirectory()) {
+        findEnumClassesInDirectory(file, packageName + "." + file.getName(), result);
+      } else if (file.getName().endsWith(".class")) {
+        String className =
+            packageName + "." + file.getName().substring(0, file.getName().length() - 6);
+        try {
+          Class<?> clazz = Class.forName(className);
+          if (clazz.isEnum() && clazz.isAnnotationPresent(EnumDict.class)) {
+            result.add(clazz);
           }
+        } catch (ClassNotFoundException e) {
+          // 忽略找不到的类
         }
       }
     }
