@@ -25,17 +25,17 @@
 package com.iboot.studio.common.config.log;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Role;
 
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "log.aop.pointcut")
 @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 public class AopProperties {
 
   /** 日志切面切入点表达式 */
+  @Value("${iboot-studio.log.aop.pointcut.value}")
   private String value;
 }

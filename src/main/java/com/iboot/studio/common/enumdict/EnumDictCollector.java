@@ -1,16 +1,18 @@
 package com.iboot.studio.common.enumdict;
 
+import com.iboot.studio.common.util.JacksonUtil;
+import jakarta.annotation.PostConstruct;
+import java.io.File;
+import java.util.*;
+import java.util.stream.Collectors;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import jakarta.annotation.PostConstruct;
 
-import java.io.File;
-import java.util.*;
-import java.util.stream.Collectors;
-
+@Slf4j
 @Service
 public class EnumDictCollector {
     private final ApplicationContext applicationContext;
@@ -36,7 +38,9 @@ public class EnumDictCollector {
         if (!StringUtils.hasText(scanPackages)) {
             throw new IllegalStateException("必须配置 iboot-studio.enum-dict.scan-packages 属性，用于指定枚举类扫描包路径");
         }
+        log.info("启用枚举类转字典功能，扫描包路径：{}", scanPackages);
         scanEnums();
+        log.info("启用枚举类转字典功能，扫描结果：{}", JacksonUtil.toJsonStr(enumDictMap));
     }
 
     private void scanEnums() {

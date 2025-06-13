@@ -1,5 +1,6 @@
 package com.iboot.studio.common.config;
 
+import com.iboot.studio.common.util.JacksonUtil;
 import com.iboot.studio.infrastructure.persistence.entity.SysDataConfig;
 import com.iboot.studio.infrastructure.persistence.repository.SysDataConfigRepository;
 import jakarta.annotation.PostConstruct;
@@ -7,11 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
 
+@Slf4j
 @Configuration("DBPropertyDataConfig")
 @RequiredArgsConstructor
 public class DBPropertyDataConfig {
@@ -35,5 +38,6 @@ public class DBPropertyDataConfig {
     MapPropertySource mapPropertySource = new MapPropertySource("db_data_config", propertyMap);
     // 将数据库配置源添加到配置源列表首位，优先级最高
     sources.addFirst(mapPropertySource);
+    log.info("加载数据库配置项完成, 配置数据：{}", JacksonUtil.toJsonStr(mapPropertySource));
   }
 }

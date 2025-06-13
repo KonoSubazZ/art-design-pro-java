@@ -33,7 +33,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Role;
 
 @Slf4j
-@ConditionalOnProperty(name = "log.aop.pointcut.value")
+@ConditionalOnProperty(name = "iboot-studio.log.aop.pointcut.value")
 @EnableConfigurationProperties(AopProperties.class)
 @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 public class LogAdvisorConfiguration {

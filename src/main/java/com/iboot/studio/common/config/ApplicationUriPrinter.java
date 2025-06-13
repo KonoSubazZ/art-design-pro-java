@@ -1,22 +1,21 @@
 package com.iboot.studio.common.config;
 
 import com.iboot.studio.common.util.PathUtils;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 /** 输出服务访问地址 */
 @Component
-@ConditionalOnProperty(name = "iboot-studio.show-url", havingValue = "true", matchIfMissing = true)
 @Order
 @DependsOn("DBPropertyDataConfig")
 public class ApplicationUriPrinter implements CommandLineRunner {
+  @Value("${iboot-studio.show-url:true}")
+  private Boolean showUrl;
 
   @Value("${server.port:18080}")
   private int port;
@@ -26,6 +25,9 @@ public class ApplicationUriPrinter implements CommandLineRunner {
 
   @Override
   public void run(String... args) {
+    if (!showUrl) {
+      return;
+    }
     System.out.println(
         "********************************************当前服务相关地址********************************************");
     String ip = "IP";

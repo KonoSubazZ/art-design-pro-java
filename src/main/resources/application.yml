@@ -3,6 +3,10 @@ iboot-studio:
   enum-dict:
     enabled: true
     scan-packages: com.iboot.studio.common.constant,com.iboot.studio.other.package
+  log:
+    aop:
+      pointcut:
+        value: "execution(* com.iboot.studio.web.controller..*.*(..))"
 
 spring:
   application:
@@ -55,11 +59,6 @@ concept:
         percentage: true #进度计算日志是否使用百分比输出
       time-spent:
         enabled: true #时间计算日志是否启用
-
-log:
-  aop:
-    pointcut:
-      value: "execution(* com.iboot.studio.web.controller..*.*(..))"
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**.xml
