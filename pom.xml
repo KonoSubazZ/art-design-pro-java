@@ -38,6 +38,7 @@
         <ulid-creator.version>5.2.3</ulid-creator.version>
         <sa-token.version>1.44.0</sa-token.version>
         <mybatis-plus.version>3.5.12</mybatis-plus.version>
+        <mybatis-plus-join.version>1.5.3</mybatis-plus-join.version>
         <sqlite.version>3.49.1.0</sqlite.version>
         <lombok.version>1.18.24</lombok.version>
     </properties>
@@ -78,6 +79,11 @@
             <version>${sqlite.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.yulichang</groupId>
+            <artifactId>mybatis-plus-join-boot-starter</artifactId>
+            <version>${mybatis-plus-join.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
