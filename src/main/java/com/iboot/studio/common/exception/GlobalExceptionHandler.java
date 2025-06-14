@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -43,19 +42,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-  @Value("${iboot-studio.response.detail-msg.enabled}")
-  private boolean detailMsgEnabled;
-
   /** 处理业务异常 */
   @ExceptionHandler(NotFoundException.class)
   @ResponseStatus(HttpStatus.OK)
   public R<Void> handleNotFoundException(NotFoundException e) {
     log.error("资源未找到异常", e);
-    return R.failed(
-        ResponseCode.NOT_FOUND,
-        "资源未找到",
-        detailMsgEnabled ? ExceptionUtils.getStackTrace(e) : null,
-        null);
+    return R.failed(ResponseCode.NOT_FOUND, "资源未找到", ExceptionUtils.getStackTrace(e), null);
   }
 
   /** 处理空指针异常 */
@@ -65,10 +57,7 @@ public class GlobalExceptionHandler {
     log.error("空指针异常", e);
     String message = "空指针异常，请检查相关对象是否已正确初始化";
     return R.failed(
-        ResponseCode.INTERNAL_SERVER_ERROR,
-        message,
-        detailMsgEnabled ? ExceptionUtils.getStackTrace(e) : null,
-        null);
+        ResponseCode.INTERNAL_SERVER_ERROR, message, ExceptionUtils.getStackTrace(e), null);
   }
 
   /** 处理参数异常 */
@@ -81,11 +70,7 @@ public class GlobalExceptionHandler {
             .map(error -> error.getField() + ": " + error.getDefaultMessage())
             .collect(Collectors.joining(", "));
     log.error("参数异常", e);
-    return R.failed(
-        ResponseCode.BAD_REQUEST,
-        msg,
-        detailMsgEnabled ? ExceptionUtils.getStackTrace(e) : null,
-        null);
+    return R.failed(ResponseCode.BAD_REQUEST, msg, ExceptionUtils.getStackTrace(e), null);
   }
 
   /** 处理参数校验异常 */
@@ -96,7 +81,7 @@ public class GlobalExceptionHandler {
     return R.failed(
         ResponseCode.BAD_REQUEST,
         ExceptionUtils.getMessage(e),
-        detailMsgEnabled ? ExceptionUtils.getStackTrace(e) : null,
+        ExceptionUtils.getStackTrace(e),
         null);
   }
 
@@ -113,7 +98,7 @@ public class GlobalExceptionHandler {
     return R.failed(
         ResponseCode.DATA_VALIDATION_ERROR,
         "参数错误：" + errorMessage,
-        detailMsgEnabled ? ExceptionUtils.getStackTrace(e) : null,
+        ExceptionUtils.getStackTrace(e),
         null);
   }
 
@@ -125,7 +110,7 @@ public class GlobalExceptionHandler {
     return R.failed(
         ResponseCode.INTERNAL_SERVER_ERROR,
         "系统未知错误：" + ExceptionUtils.getMessage(e),
-        detailMsgEnabled ? ExceptionUtils.getStackTrace(e) : null,
+        ExceptionUtils.getStackTrace(e),
         null);
   }
 }

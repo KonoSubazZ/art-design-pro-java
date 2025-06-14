@@ -27,9 +27,12 @@ package com.iboot.studio.common.constant;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /** 统一返回 */
 @Data
+@Component
 public class R<T> {
   @JsonIgnore private ResponseCode responseCode;
   private Integer code;
@@ -38,7 +41,14 @@ public class R<T> {
   private String detailMsg;
   private T data;
 
-  private R() {}
+  private static R<?> instance;
+
+  @Value("${iboot-studio.response.detail-msg.enabled:true}")
+  private boolean detailMsgEnabled;
+
+  public R() {
+    instance = this;
+  }
 
   private R(Integer code, Boolean success, String msg, String detailMsg, T data) {
     this.code = code;
@@ -46,6 +56,10 @@ public class R<T> {
     this.msg = msg;
     this.detailMsg = detailMsg;
     this.data = data;
+  }
+
+  private static boolean isDetailMsgEnabled() {
+    return instance != null && instance.detailMsgEnabled;
   }
 
   public static <T> R<T> success() {
@@ -58,7 +72,8 @@ public class R<T> {
 
   public static <T> R<T> success(ResponseCode responseCode, String msg, String detailMsg, T data) {
     msg = StrUtil.isEmpty(msg) ? responseCode.getMsg() : msg;
-    return new R<>(responseCode.getCode(), true, msg, detailMsg, data);
+    return new R<>(
+        responseCode.getCode(), true, msg, isDetailMsgEnabled() ? detailMsg : null, data);
   }
 
   public static <T> R<T> failed() {
@@ -72,6 +87,7 @@ public class R<T> {
 
   public static <T> R<T> failed(ResponseCode responseCode, String msg, String detailMsg, T data) {
     msg = StrUtil.isEmpty(msg) ? responseCode.getMsg() : msg;
-    return new R<>(responseCode.getCode(), false, msg, detailMsg, data);
+    return new R<>(
+        responseCode.getCode(), false, msg, isDetailMsgEnabled() ? detailMsg : null, data);
   }
 }
