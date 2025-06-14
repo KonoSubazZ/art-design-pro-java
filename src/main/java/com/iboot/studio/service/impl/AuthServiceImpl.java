@@ -27,10 +27,10 @@ package com.iboot.studio.service.impl;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.collect.Lists;
 import com.iboot.studio.common.util.MenuUtil;
+import com.iboot.studio.common.util.UserUtil;
 import com.iboot.studio.infrastructure.persistence.entity.Resource;
 import com.iboot.studio.infrastructure.persistence.entity.User;
 import com.iboot.studio.service.AuthService;
@@ -56,7 +56,8 @@ public class AuthServiceImpl implements AuthService {
         userService.getOne(
             new LambdaQueryWrapper<User>().eq(User::getUserName, loginDTO.getUserName()));
     Assert.notNull(user, "用户不存在或密码错误");
-    Assert.isTrue(StrUtil.equals(user.getPassword(), loginDTO.getPassword()), "用户不存在或密码错误");
+    boolean isSame = UserUtil.checkPassword(loginDTO.getPassword(), user.getPassword());
+    Assert.isTrue(isSame, "用户不存在或密码错误");
 
     // 用户存在且密码匹配，生成token
     StpUtil.login(user.getUserId(), loginDTO.getRememberPassword());

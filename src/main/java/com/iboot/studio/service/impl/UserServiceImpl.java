@@ -24,11 +24,69 @@
 
 package com.iboot.studio.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.crypto.digest.BCrypt;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.iboot.studio.infrastructure.persistence.entity.User;
+import com.iboot.studio.infrastructure.persistence.repository.RoleRepository;
 import com.iboot.studio.infrastructure.persistence.repository.UserRepository;
 import com.iboot.studio.service.UserService;
+import com.iboot.studio.web.dto.UserDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+
+import java.util.Objects;
+import java.util.Set;
 
 @Service
-public class UserServiceImpl extends ServiceImpl<UserRepository, User> implements UserService {}
+@RequiredArgsConstructor
+public class UserServiceImpl extends ServiceImpl<UserRepository, User> implements UserService {
+  @Value("${iboot-studio.default-password:123456}")
+  private String defaultPassword;
+
+  private final UserRepository userRepository;
+	private final RoleRepository roleRepository;
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void saveOrUpdate(UserDTO userDTO) {
+    // 根据用户名查询用户
+		User one =
+        new LambdaQueryChainWrapper<>(userRepository)
+            .eq(User::getUserName, userDTO.getUserName())
+            .one();
+    User bean = BeanUtil.toBean(userDTO, User.class);
+
+		// 判断是否是新增用户
+    boolean isAddUser = !StringUtils.hasText(userDTO.getUserId());
+    if (isAddUser) {
+			//  判断用户名是否已存在
+      Assert.isNull(one, "用户名已存在");
+      // 密码加密
+			String hashedPassword =
+          BCrypt.hashpw(defaultPassword, BCrypt.gensalt(userDTO.getUserName().length()));
+      bean.setPassword(hashedPassword);
+      // 保存用户
+			this.save(bean);
+    }
+
+		// 判断是否是修改用户名是不是已经存在
+    Assert.isTrue(Objects.equals(bean.getUserId(), userDTO.getUserId()), "用户名已存在");
+    // 修改用户
+		this.updateById(bean);
+
+		// 处理用户角色
+	  roleRepository.deleteRoleUserByUserId(bean.getUserId());
+		Set<String> roleIds = userDTO.getRoleIds();
+	  if (CollUtil.isEmpty(roleIds)) {
+		  return;
+	  }
+		roleRepository.insertRoleUser(bean.getUserId(), roleIds);
+  }
+}

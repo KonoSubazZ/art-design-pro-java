@@ -30,8 +30,13 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface RoleRepository extends BaseMapper<Role> {
 	List<Role> listByUserId(@Param("userId") Object userId);
+
+	void deleteRoleUserByUserId(@Param("userId") String userId);
+
+	void insertRoleUser(@Param("userId") String userId, @Param("roleIds") Set<String> roleIds);
 }

@@ -27,15 +27,18 @@ package com.iboot.studio.web.controller;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.iboot.studio.common.constant.R;
+import com.iboot.studio.common.constant.ResponseCode;
 import com.iboot.studio.infrastructure.persistence.entity.User;
 import com.iboot.studio.service.AuthService;
 import com.iboot.studio.service.UserService;
+import com.iboot.studio.web.dto.UserDTO;
 import com.iboot.studio.web.vo.UserTokenInfo;
 import com.iboot.studio.web.vo.UserVO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import static com.iboot.studio.common.constant.Const.SERVER_API_PATH;
 
@@ -43,6 +46,9 @@ import static com.iboot.studio.common.constant.Const.SERVER_API_PATH;
 @RequestMapping(SERVER_API_PATH + "/user")
 @RequiredArgsConstructor
 public class UserController {
+  @Value("${iboot-studio.default-password:123456}")
+  private String defaultPassword;
+
   private final AuthService authService;
   private final UserService userService;
 
@@ -58,5 +64,14 @@ public class UserController {
     Page<UserVO> userVOPage = BeanUtil.toBean(page, Page.class);
     userVOPage.setRecords(BeanUtil.copyToList(page.getRecords(), UserVO.class));
     return R.success(userVOPage);
+  }
+
+  @PostMapping("/saveOrUpdate")
+  public R<String> saveOrUpdate(@RequestBody @Validated UserDTO userDTO) {
+    userService.saveOrUpdate(userDTO);
+    if (StringUtils.hasText(userDTO.getUserId())) {
+      return R.success();
+    }
+    return R.success(ResponseCode.SUCCESS, "操作成功，初始密码为：" + defaultPassword, null, null);
   }
 }

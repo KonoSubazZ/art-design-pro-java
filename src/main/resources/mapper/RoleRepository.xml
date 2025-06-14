@@ -10,4 +10,17 @@
         WHERE
         user_role.user_id = #{userId}
     </select>
+
+    <delete id="deleteRoleUserByUserId">
+        DELETE FROM sys_role_user
+        WHERE user_id = #{userId}
+    </delete>
+
+    <insert id="insertRoleUser">
+        INSERT INTO sys_role_user (user_id, role_id)
+        VALUES
+        <foreach item="roleId" collection="roleIds" separator=",">
+            (#{userId}, #{roleId})
+        </foreach>
+    </insert>
 </mapper>
