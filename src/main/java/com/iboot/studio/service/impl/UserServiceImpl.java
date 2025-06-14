@@ -29,6 +29,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.iboot.studio.common.util.IdUtil;
 import com.iboot.studio.infrastructure.persistence.entity.User;
 import com.iboot.studio.infrastructure.persistence.repository.RoleRepository;
 import com.iboot.studio.infrastructure.persistence.repository.UserRepository;
@@ -51,42 +52,40 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
   private String defaultPassword;
 
   private final UserRepository userRepository;
-	private final RoleRepository roleRepository;
+  private final RoleRepository roleRepository;
 
   @Override
   @Transactional(rollbackFor = Exception.class)
   public void saveOrUpdate(UserDTO userDTO) {
     // 根据用户名查询用户
-		User one =
+    User one =
         new LambdaQueryChainWrapper<>(userRepository)
             .eq(User::getUserName, userDTO.getUserName())
             .one();
     User bean = BeanUtil.toBean(userDTO, User.class);
 
-		// 判断是否是新增用户
+    // 判断是否是新增用户
     boolean isAddUser = !StringUtils.hasText(userDTO.getUserId());
     if (isAddUser) {
-			//  判断用户名是否已存在
+      //  判断用户名是否已存在
       Assert.isNull(one, "用户名已存在");
       // 密码加密
-			String hashedPassword =
+      String hashedPassword =
           BCrypt.hashpw(defaultPassword, BCrypt.gensalt(userDTO.getUserName().length()));
       bean.setPassword(hashedPassword);
-      // 保存用户
-			this.save(bean);
+      bean.setUserId(IdUtil.getMonotonicUlid());
+    } else {
+      // 判断是否是修改用户名是不是已经存在
+      Assert.isTrue(Objects.equals(bean.getUserId(), userDTO.getUserId()), "用户名已存在");
     }
+    this.saveOrUpdate(bean);
 
-		// 判断是否是修改用户名是不是已经存在
-    Assert.isTrue(Objects.equals(bean.getUserId(), userDTO.getUserId()), "用户名已存在");
-    // 修改用户
-		this.updateById(bean);
-
-		// 处理用户角色
-	  roleRepository.deleteRoleUserByUserId(bean.getUserId());
-		Set<String> roleIds = userDTO.getRoleIds();
-	  if (CollUtil.isEmpty(roleIds)) {
-		  return;
-	  }
-		roleRepository.insertRoleUser(bean.getUserId(), roleIds);
+    // 处理用户角色
+    roleRepository.deleteRoleUserByUserId(bean.getUserId());
+    Set<String> roleIds = userDTO.getRoleIds();
+    if (CollUtil.isEmpty(roleIds)) {
+      return;
+    }
+    roleRepository.insertRoleUser(bean.getUserId(), roleIds);
   }
 }

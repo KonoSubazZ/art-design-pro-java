@@ -25,7 +25,9 @@
 package com.iboot.studio.infrastructure.integration.mybatisplus;
 
 import cn.hutool.core.lang.func.LambdaUtil;
+import com.iboot.studio.common.util.UserUtil;
 import com.iboot.studio.infrastructure.persistence.entity.BaseEntity;
+import com.iboot.studio.infrastructure.persistence.entity.User;
 import java.time.LocalDateTime;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
@@ -34,19 +36,41 @@ import org.springframework.stereotype.Component;
 public class MetaObjectHandler implements com.baomidou.mybatisplus.core.handlers.MetaObjectHandler {
   @Override
   public void insertFill(MetaObject metaObject) {
+    User currentUser = UserUtil.getCurrentUser();
     this.strictInsertFill(
         metaObject,
         LambdaUtil.getFieldName(BaseEntity::getCreateTime),
         LocalDateTime.class,
         LocalDateTime.now());
+    this.strictInsertFill(
+        metaObject,
+        LambdaUtil.getFieldName(BaseEntity::getCreatorId),
+        String.class,
+        currentUser.getUserId());
+    this.strictInsertFill(
+        metaObject,
+        LambdaUtil.getFieldName(BaseEntity::getCreatorName),
+        String.class,
+        currentUser.getRealName());
   }
 
   @Override
   public void updateFill(MetaObject metaObject) {
+    User currentUser = UserUtil.getCurrentUser();
     this.strictUpdateFill(
         metaObject,
         LambdaUtil.getFieldName(BaseEntity::getUpdateTime),
         LocalDateTime.class,
         LocalDateTime.now());
+    this.strictUpdateFill(
+        metaObject,
+        LambdaUtil.getFieldName(BaseEntity::getUpdaterId),
+        String.class,
+        currentUser.getUserId());
+    this.strictUpdateFill(
+        metaObject,
+        LambdaUtil.getFieldName(BaseEntity::getUpdaterName),
+        String.class,
+        currentUser.getRealName());
   }
 }

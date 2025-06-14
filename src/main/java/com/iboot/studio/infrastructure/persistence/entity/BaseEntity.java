@@ -42,7 +42,7 @@ public class BaseEntity {
 
   /** 创建时间 */
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
-  @TableField(value = "create_time")
+  @TableField(value = "create_time", fill = FieldFill.INSERT)
   private LocalDateTime createTime;
 
   /** 修改人 id */
