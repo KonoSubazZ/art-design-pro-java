@@ -24,13 +24,13 @@
 
 package com.iboot.studio.common.exception;
 
-import cn.hutool.core.exceptions.ExceptionUtil;
 import com.iboot.studio.common.constant.R;
 import com.iboot.studio.common.constant.ResponseCode;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -43,13 +43,19 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+  @Value("${iboot-studio.response.detail-msg.enabled}")
+  private boolean detailMsgEnabled;
 
   /** 处理业务异常 */
   @ExceptionHandler(NotFoundException.class)
   @ResponseStatus(HttpStatus.OK)
   public R<Void> handleNotFoundException(NotFoundException e) {
     log.error("资源未找到异常", e);
-    return R.failed(ResponseCode.NOT_FOUND, "资源未找到", ExceptionUtil.getRootCauseMessage(e), null);
+    return R.failed(
+        ResponseCode.NOT_FOUND,
+        "资源未找到",
+        detailMsgEnabled ? ExceptionUtils.getStackTrace(e) : null,
+        null);
   }
 
   /** 处理空指针异常 */
@@ -57,14 +63,11 @@ public class GlobalExceptionHandler {
   @ResponseStatus(HttpStatus.OK)
   public R<Void> handleNullPointerException(NullPointerException e) {
     log.error("空指针异常", e);
-    String message = e.getMessage();
-    if (message == null || message.isEmpty()) {
-      message = "空指针异常，请检查相关对象是否已正确初始化";
-    }
+    String message = "空指针异常，请检查相关对象是否已正确初始化";
     return R.failed(
         ResponseCode.INTERNAL_SERVER_ERROR,
-        "系统内部错误:" + message,
-        ExceptionUtil.getRootCauseMessage(e),
+        message,
+        detailMsgEnabled ? ExceptionUtils.getStackTrace(e) : null,
         null);
   }
 
@@ -77,22 +80,23 @@ public class GlobalExceptionHandler {
         fieldErrors.stream()
             .map(error -> error.getField() + ": " + error.getDefaultMessage())
             .collect(Collectors.joining(", "));
-    String detailMsg = ExceptionUtil.getRootCauseMessage(e);
-    log.error("参数异常: {}", detailMsg);
-    return R.failed(ResponseCode.BAD_REQUEST, msg, detailMsg, null);
+    log.error("参数异常", e);
+    return R.failed(
+        ResponseCode.BAD_REQUEST,
+        msg,
+        detailMsgEnabled ? ExceptionUtils.getStackTrace(e) : null,
+        null);
   }
 
   /** 处理参数校验异常 */
   @ExceptionHandler(IllegalArgumentException.class)
   @ResponseStatus(HttpStatus.OK)
   public R<Void> handleIllegalArgumentException(IllegalArgumentException e) {
-    String stackTrace = ExceptionUtils.getStackTrace(e);
-    log.error("内部参数异常: {}", stackTrace);
-
+    log.error("内部参数异常", e);
     return R.failed(
         ResponseCode.BAD_REQUEST,
-        e.getMessage(),
-        stackTrace,
+        ExceptionUtils.getMessage(e),
+        detailMsgEnabled ? ExceptionUtils.getStackTrace(e) : null,
         null);
   }
 
@@ -105,11 +109,11 @@ public class GlobalExceptionHandler {
         fieldErrors.stream()
             .map(error -> error.getField() + ": " + error.getDefaultMessage())
             .collect(Collectors.joining(", "));
-    log.error("参数绑定异常: {}", errorMessage);
+    log.error("参数绑定异常", e);
     return R.failed(
         ResponseCode.DATA_VALIDATION_ERROR,
         "参数错误：" + errorMessage,
-        ExceptionUtil.getRootCauseMessage(e),
+        detailMsgEnabled ? ExceptionUtils.getStackTrace(e) : null,
         null);
   }
 
@@ -120,8 +124,8 @@ public class GlobalExceptionHandler {
     log.error("系统异常", e);
     return R.failed(
         ResponseCode.INTERNAL_SERVER_ERROR,
-        "系统内部错误：" + e.getMessage(),
-        ExceptionUtil.getRootCauseMessage(e),
+        "系统未知错误：" + ExceptionUtils.getMessage(e),
+        detailMsgEnabled ? ExceptionUtils.getStackTrace(e) : null,
         null);
   }
 }
