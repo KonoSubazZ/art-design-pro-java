@@ -42,6 +42,7 @@
         <bean-searcher.version>4.4.1</bean-searcher.version>
         <sqlite.version>3.49.1.0</sqlite.version>
         <lombok.version>1.18.24</lombok.version>
+        <retrofit.version>3.1.7</retrofit.version>
     </properties>
 
     <dependencyManagement>
@@ -67,6 +68,12 @@
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.lianjiatech</groupId>
+            <artifactId>retrofit-spring-boot-starter</artifactId>
+            <version>${retrofit.version}</version>
         </dependency>
 
         <dependency>
