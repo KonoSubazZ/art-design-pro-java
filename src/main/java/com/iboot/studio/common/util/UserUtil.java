@@ -5,16 +5,17 @@ import cn.hutool.crypto.digest.BCrypt;
 import cn.hutool.extra.spring.SpringUtil;
 import com.iboot.studio.infrastructure.persistence.entity.User;
 import com.iboot.studio.service.UserService;
-
 import java.util.Objects;
 
 public class UserUtil {
-  public static String getHashPassword(String userName, String password) {
-    return BCrypt.hashpw(password, BCrypt.gensalt(userName.length()));
-  }
-
-  public static boolean checkPassword(String password, String hashPassword) {
-    return BCrypt.checkpw(password, hashPassword);
+  /**
+   * 校验密码是否相同
+   * @param sha256Hex SHA256 加密后的16进制字符串密码
+   * @param pwdBCrypt BCrypt 加密后的密码
+   * @return
+   */
+  public static boolean checkIsSamePwd(String sha256Hex, String pwdBCrypt) {
+    return BCrypt.checkpw(sha256Hex, pwdBCrypt);
   }
 
   public static User getCurrentUser() {

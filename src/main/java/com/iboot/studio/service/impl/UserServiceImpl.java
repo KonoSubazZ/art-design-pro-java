@@ -27,6 +27,7 @@ package com.iboot.studio.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.crypto.digest.BCrypt;
+import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.iboot.studio.common.util.IdUtil;
@@ -71,7 +72,7 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
       Assert.isNull(one, "用户名已存在");
       // 密码加密
       String hashedPassword =
-          BCrypt.hashpw(defaultPassword, BCrypt.gensalt(userDTO.getUserName().length()));
+          BCrypt.hashpw(DigestUtil.sha256Hex(defaultPassword), BCrypt.gensalt(userDTO.getUserName().length()));
       bean.setPassword(hashedPassword);
       bean.setUserId(IdUtil.getMonotonicUlid());
     } else {

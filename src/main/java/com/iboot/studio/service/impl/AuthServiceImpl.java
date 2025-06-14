@@ -56,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
         userService.getOne(
             new LambdaQueryWrapper<User>().eq(User::getUserName, loginDTO.getUserName()));
     Assert.notNull(user, "用户不存在或密码错误");
-    boolean isSame = UserUtil.checkPassword(loginDTO.getPassword(), user.getPassword());
+    boolean isSame = UserUtil.checkIsSamePwd(loginDTO.getPassword(), user.getPassword());
     Assert.isTrue(isSame, "用户不存在或密码错误");
 
     // 用户存在且密码匹配，生成token
