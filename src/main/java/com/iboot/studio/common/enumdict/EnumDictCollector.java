@@ -2,14 +2,14 @@ package com.iboot.studio.common.enumdict;
 
 import com.iboot.studio.common.util.JacksonUtil;
 import jakarta.annotation.PostConstruct;
-import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -17,8 +17,6 @@ import org.springframework.util.StringUtils;
 @Service
 @RequiredArgsConstructor
 public class EnumDictCollector {
-  private final ApplicationContext applicationContext;
-
   @Value("${iboot-studio.enum-dict.enabled:false}")
   private boolean enabled;
 
@@ -42,47 +40,32 @@ public class EnumDictCollector {
   }
 
   private void scanEnums() {
-    Set<Class<?>> enumClasses = new HashSet<>();
+    ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
+    scanner.addIncludeFilter(new AnnotationTypeFilter(EnumDict.class));
+
     String[] packages = scanPackages.split(",");
-
     for (String packageName : packages) {
-      enumClasses.addAll(findEnumClasses(packageName.trim()));
-    }
+      try {
+        Set<Class<?>> enumClasses = scanner.findCandidateComponents(packageName.trim()).stream()
+            .map(beanDefinition -> {
+              try {
+                return Class.forName(beanDefinition.getBeanClassName());
+              } catch (ClassNotFoundException e) {
+                return null;
+              }
+            })
+            .filter(clazz -> clazz != null && clazz.isEnum() && IEnumDict.class.isAssignableFrom(clazz))
+            .collect(Collectors.toSet());
 
-    Map<String, List<Class<?>>> valueToClasses = new HashMap<>();
-
-    for (Class<?> enumClass : enumClasses) {
-      EnumDict annotation = enumClass.getAnnotation(EnumDict.class);
-      if (annotation != null) {
-        // 检查是否实现了IEnumDict接口
-        if (!IEnumDict.class.isAssignableFrom(enumClass)) {
-          throw new IllegalStateException(
-              String.format("枚举类 %s 使用了@EnumDict注解，但未实现IEnumDict接口", enumClass.getName()));
-        }
-
-        String value = annotation.value();
-        String key = StringUtils.hasText(value) ? value : enumClass.getName();
-
-        valueToClasses.computeIfAbsent(key, k -> new ArrayList<>()).add(enumClass);
-      }
-    }
-
-    // 检查重复的value
-    valueToClasses.forEach(
-        (key, classes) -> {
-          if (classes.size() > 1) {
-            String duplicateClasses =
-                classes.stream().map(Class::getName).collect(Collectors.joining(", "));
-            throw new IllegalStateException(
-                String.format("发现重复的EnumDict value='%s'，存在于以下类中：%s", key, duplicateClasses));
-          }
-        });
-
-    // 构建最终结果
-    valueToClasses.forEach(
-        (key, classes) -> {
-          Class<?> enumClass = classes.get(0);
+        for (Class<?> enumClass : enumClasses) {
           EnumDict annotation = enumClass.getAnnotation(EnumDict.class);
+          String value = annotation.value();
+          String key = StringUtils.hasText(value) ? value : enumClass.getName();
+
+          if (enumDictMap.containsKey(key)) {
+            throw new IllegalStateException(
+                String.format("发现重复的EnumDict value='%s'，存在于以下类中：%s", key, enumClass.getName()));
+          }
 
           EnumDictInfo info = new EnumDictInfo();
           info.setName(key);
@@ -97,70 +80,11 @@ public class EnumDictCollector {
                   .collect(Collectors.toList()));
 
           enumDictMap.put(key, info);
-        });
-  }
-
-  private Set<Class<?>> findEnumClasses(String packageName) {
-    Set<Class<?>> result = new HashSet<>();
-    try {
-      ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-      String path = packageName.replace('.', '/');
-      java.net.URL resource = classLoader.getResource(path);
-      if (resource != null) {
-        java.io.File directory = new java.io.File(resource.getFile());
-        if (directory.exists()) {
-          findEnumClassesInDirectory(directory, packageName, result);
         }
-      }
-    } catch (Exception e) {
-      throw new RuntimeException("扫描枚举类失败", e);
-    }
-    return result;
-  }
-
-  private void findEnumClassesInDirectory(
-      java.io.File directory, String packageName, Set<Class<?>> result) {
-    if (directory == null || !directory.exists()) {
-      return;
-    }
-
-    File[] files = directory.listFiles();
-    if (files == null) {
-      return;
-    }
-
-    for (File file : files) {
-      if (file.isDirectory()) {
-        processDirectory(file, packageName, result);
-      } else {
-        processClassFile(file, packageName, result);
+      } catch (Exception e) {
+        log.warn("扫描包 {} 时出错", packageName, e);
       }
     }
-  }
-
-  private void processDirectory(File directory, String packageName, Set<Class<?>> result) {
-    String newPackageName = packageName + "." + directory.getName();
-    findEnumClassesInDirectory(directory, newPackageName, result);
-  }
-
-  private void processClassFile(File file, String packageName, Set<Class<?>> result) {
-    if (!file.getName().endsWith(".class")) {
-      return;
-    }
-
-    String className = packageName + "." + file.getName().replace(".class", "");
-    try {
-      Class<?> clazz = Class.forName(className);
-      if (isValidEnumDict(clazz)) {
-        result.add(clazz);
-      }
-    } catch (ClassNotFoundException e) {
-      // 忽略找不到的类
-    }
-  }
-
-  private boolean isValidEnumDict(Class<?> clazz) {
-    return clazz.isEnum() && clazz.isAnnotationPresent(EnumDict.class);
   }
 
   public List<EnumDictInfo> getAllEnumDicts() {
