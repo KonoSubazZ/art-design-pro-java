@@ -1,7 +1,7 @@
 package com.iboot.studio.common.config.log;
 
+import jakarta.validation.constraints.NotNull;
 import java.util.Map;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.MDC;
 import org.springframework.core.task.TaskDecorator;
 
