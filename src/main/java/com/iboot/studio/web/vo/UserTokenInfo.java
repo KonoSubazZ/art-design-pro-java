@@ -39,6 +39,11 @@ public class UserTokenInfo {
   /** 真实姓名 */
   private String realName;
 
+  /**
+   * 头像地址
+   */
+  private String avatar;
+
   /** 角色列表 */
   private List<String> roles;
 
