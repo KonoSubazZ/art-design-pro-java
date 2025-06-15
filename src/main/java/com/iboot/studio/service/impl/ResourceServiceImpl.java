@@ -24,19 +24,24 @@
 
 package com.iboot.studio.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.iboot.studio.infrastructure.persistence.entity.Resource;
 import com.iboot.studio.infrastructure.persistence.repository.ResourceRepository;
 import com.iboot.studio.service.ResourceService;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ResourceServiceImpl extends ServiceImpl<ResourceRepository, Resource>
     implements ResourceService {
   @Override
   public List<Resource> listByRoleList(List<String> roleList) {
+    if (CollUtil.isEmpty(roleList)) {
+      // 用户没有角色返回空集合权限码
+      return Lists.newArrayList();
+    }
     return this.baseMapper.listByRoleList(roleList);
   }
 }
