@@ -29,13 +29,17 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.iboot.studio.common.util.IdUtil;
+import com.iboot.studio.infrastructure.persistence.entity.Role;
 import com.iboot.studio.infrastructure.persistence.entity.User;
 import com.iboot.studio.infrastructure.persistence.repository.RoleRepository;
 import com.iboot.studio.infrastructure.persistence.repository.UserRepository;
 import com.iboot.studio.service.UserService;
 import com.iboot.studio.web.dto.UserDTO;
+import com.iboot.studio.web.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -43,6 +47,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -88,5 +93,10 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
       return;
     }
     roleRepository.insertRoleUser(bean.getUserId(), roleIds);
+  }
+
+  @Override
+  public Page<UserVO> getUserPage(UserDTO userDTO) {
+    return userRepository.getUserPage(userDTO);
   }
 }

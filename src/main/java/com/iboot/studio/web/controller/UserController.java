@@ -24,11 +24,11 @@
 
 package com.iboot.studio.web.controller;
 
-import cn.hutool.core.bean.BeanUtil;
+import static com.iboot.studio.common.constant.Const.SERVER_API_PATH;
+
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.iboot.studio.common.constant.R;
 import com.iboot.studio.common.constant.ResponseCode;
-import com.iboot.studio.infrastructure.persistence.entity.User;
 import com.iboot.studio.service.AuthService;
 import com.iboot.studio.service.UserService;
 import com.iboot.studio.web.dto.UserDTO;
@@ -39,8 +39,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import static com.iboot.studio.common.constant.Const.SERVER_API_PATH;
 
 @RestController
 @RequestMapping(SERVER_API_PATH + "/user")
@@ -59,11 +57,9 @@ public class UserController {
   }
 
   @GetMapping("/page")
-  public R<Page<UserVO>> getUserPage() {
-    Page<User> page = userService.page(new Page<>());
-    Page<UserVO> userVOPage = BeanUtil.toBean(page, Page.class);
-    userVOPage.setRecords(BeanUtil.copyToList(page.getRecords(), UserVO.class));
-    return R.success(userVOPage);
+  public R<Page<UserVO>> getUserPage(UserDTO userDTO) {
+    Page<UserVO> page = userService.getUserPage(userDTO);
+    return R.success(page);
   }
 
   @PostMapping("/saveOrUpdate")

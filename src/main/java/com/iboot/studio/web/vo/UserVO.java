@@ -6,6 +6,8 @@ import com.iboot.studio.infrastructure.persistence.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Set;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class UserVO extends BaseEntity {
@@ -28,4 +30,7 @@ public class UserVO extends BaseEntity {
   private String intro;
 
   private Boolean isSuperAdmin;
+
+  /** 角色ID列表 */
+  private Set<String> roleIds;
 }

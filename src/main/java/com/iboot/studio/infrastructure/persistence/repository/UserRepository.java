@@ -24,9 +24,15 @@
 
 package com.iboot.studio.infrastructure.persistence.repository;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.yulichang.base.MPJBaseMapper;
 import com.iboot.studio.infrastructure.persistence.entity.User;
+import com.iboot.studio.web.dto.UserDTO;
+import com.iboot.studio.web.vo.UserVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends BaseMapper<User> {}
+public interface UserRepository extends MPJBaseMapper<User> {
+  Page<UserVO> getUserPage(@Param("page") UserDTO userDTO);
+}

@@ -24,10 +24,14 @@
 
 package com.iboot.studio.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.iboot.studio.infrastructure.persistence.entity.User;
 import com.iboot.studio.web.dto.UserDTO;
+import com.iboot.studio.web.vo.UserVO;
 
 public interface UserService extends IService<User> {
 	void saveOrUpdate(UserDTO userDTO);
+
+	Page<UserVO> getUserPage(UserDTO userDTO);
 }

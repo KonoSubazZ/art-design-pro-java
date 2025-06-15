@@ -1,12 +1,16 @@
 package com.iboot.studio.web.dto;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.iboot.studio.common.constant.GenderEnum;
+import com.iboot.studio.web.vo.UserVO;
 import jakarta.validation.constraints.NotNull;
 import java.util.Set;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class UserDTO {
+public class UserDTO extends Page <UserVO> {
   private String userId;
 
   @NotNull(message = "用户名不能为空")
