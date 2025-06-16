@@ -25,15 +25,28 @@
 package com.iboot.studio.common.util;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.iboot.studio.common.constant.Const;
 import com.iboot.studio.common.constant.ResourceTypeEnum;
 import com.iboot.studio.infrastructure.persistence.entity.Resource;
 import com.iboot.studio.web.vo.UserMenu;
-
 import java.util.*;
 
 public class MenuUtil {
 
   private MenuUtil() {}
+
+  /**
+   * 将请求路径转换为资源编码
+   *
+   * @param requestPath 请求路径
+   * @return 资源编码
+   */
+  public static String requestPath2ResourceCode(String requestPath) {
+    if (requestPath == null) {
+      return "";
+    }
+	  return requestPath.replace(Const.SERVER_API_PATH + "/", "");
+  }
 
   /**
    * 将系统资源转为用户菜单（树结构）

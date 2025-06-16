@@ -8,53 +8,82 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollUtil;
 import com.google.common.collect.Lists;
 import com.iboot.studio.common.exception.DemoModeException;
+import com.iboot.studio.common.exception.UnauthorizedException;
+import com.iboot.studio.common.util.MenuUtil;
+import com.iboot.studio.infrastructure.persistence.entity.User;
+import com.iboot.studio.service.UserService;
 import java.util.Objects;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /** 权限处理器 */
+@Slf4j
 @Component
 @EnableConfigurationProperties(SaExtensionProperties.class)
 @RequiredArgsConstructor
 public class SaPermissionProcessor {
   private final SaExtensionProperties properties;
+  private final UserService userService;
 
   public void process() {
     if (!properties.getEnabled()) {
-      // 未启用权限校验
+      log.warn("权限校验未启用");
       return;
     }
 
     SaRouterStaff saRouterStaff = SaRouter.match("/**");
-	  Set<String> excludes = properties.getExcludes();
-	  if (CollUtil.isNotEmpty(excludes)) {
+    Set<String> excludes = properties.getExcludes();
+    if (CollUtil.isNotEmpty(excludes)) {
       // 排除不需要权限校验的资源
       saRouterStaff.notMatch(Lists.newArrayList(excludes));
     }
-    saRouterStaff.check(
-        r -> {
-          // 登录校验
-          StpUtil.checkLogin();
-          // 权限校验
-          checkPermission();
-        });
+
+    saRouterStaff.check(this::performPermissionCheck);
+  }
+
+  private void performPermissionCheck() {
+    // 登录校验
+    StpUtil.checkLogin();
+
+    Object loginId = StpUtil.getLoginId();
+    User user = userService.getById(loginId.toString());
+    if (user.getIsSuperAdmin()) {
+      // 超级管理员不需要权限校验
+      return;
+    }
+
+    // 权限校验
+    checkPermission();
   }
 
   private void checkPermission() {
     SaRequest request = SaHolder.getRequest();
     if (Objects.isNull(request)) {
-      // 非 http 请求放行避免空指针异常
+      log.debug("非HTTP请求，跳过权限校验");
       return;
     }
-    String requestPath = request.getRequestPath();
-		System.out.println("requestPath = " + requestPath);
-    String requestMethod = request.getMethod();
-    System.out.println("requestMethod = " + requestMethod);
 
-		if (properties.getDemoMode() && !"GET".equals(requestMethod) && !properties.getDemoModeIncludes().contains(requestPath)) {
-			throw new DemoModeException();
-		}
+    String requestPath = request.getRequestPath();
+    String requestMethod = request.getMethod();
+
+	  boolean demoModeRequest = isDemoModeRequest(requestMethod, requestPath);
+	  if (demoModeRequest) {
+      throw new DemoModeException("演示模式禁止操作");
+    }
+
+		String resourceCode = MenuUtil.requestPath2ResourceCode(requestPath);
+	  boolean hasPermission = StpUtil.hasPermission(resourceCode);
+		if (!hasPermission && !properties.getBasicPermissions().contains(resourceCode)) {
+      throw new UnauthorizedException("权限不足");
+    }
+  }
+
+  private boolean isDemoModeRequest(String requestMethod, String requestPath) {
+    return properties.getDemoMode()
+        && !"GET".equals(requestMethod)
+        && !properties.getDemoModeIncludes().contains(requestPath);
   }
 }

@@ -72,11 +72,16 @@ sa-token:
       - /*.woff2
       - /*.ttf
       - /*.json
-    demo-mode: true
+    demo-mode: false
     # 演示模式下运行操作的 非 GET 资源请求
     demo-mode-includes:
       - /api/iboot/auth/login
       - /api/iboot/auth/logout
+    # 基础权限
+    basic-permissions:
+      # 用户获取自身信息（直接填权限码即可）
+      - user/info
+      - auth/getUserMenu
 
 concept:
   download:

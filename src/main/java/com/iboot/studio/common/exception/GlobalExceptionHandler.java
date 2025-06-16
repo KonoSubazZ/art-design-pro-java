@@ -59,13 +59,22 @@ public class GlobalExceptionHandler {
     return R.failed(ResponseCode.UNAUTHORIZED, "未登录或登录失效", ExceptionUtils.getStackTrace(e), null);
   }
 
-  /** 未登录 */
+  /** 无权限异常 */
+  @ExceptionHandler(UnauthorizedException.class)
+  @ResponseStatus(HttpStatus.OK)
+  public R<Void> handleUnauthorizedException(UnauthorizedException e) {
+    log.error("未授权异常", e);
+    return R.failed(ResponseCode.FORBIDDEN, "无此权限操作", ExceptionUtils.getStackTrace(e), null);
+  }
+
+  /** 演示模式 */
   @ExceptionHandler(DemoModeException.class)
   @ResponseStatus(HttpStatus.OK)
   public R<Void> handleDemoModeException(DemoModeException e) {
     log.error("演示模式异常", e);
     return R.failed(ResponseCode.FORBIDDEN, "演示模式禁止操作", ExceptionUtils.getStackTrace(e), null);
   }
+
 
   /** 处理空指针异常 */
   @ExceptionHandler(NullPointerException.class)
