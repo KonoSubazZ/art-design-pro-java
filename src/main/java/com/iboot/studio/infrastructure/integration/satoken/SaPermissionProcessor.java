@@ -41,16 +41,13 @@ public class SaPermissionProcessor {
       saRouterStaff.notMatch(Lists.newArrayList(excludes));
     }
     // 进行权限检查
-    saRouterStaff.check(this::performPermissionCheck);
+    saRouterStaff.check(this::checkPermission);
   }
-
-  private void performPermissionCheck() {
+  private void checkPermission() {
     // 登录校验
     StpUtil.checkLogin();
-    checkPermission();
-  }
 
-  private void checkPermission() {
+    // 权限检查
     SaRequest request = SaHolder.getRequest();
     if (Objects.isNull(request)) {
       log.debug("非HTTP请求，跳过权限校验");
