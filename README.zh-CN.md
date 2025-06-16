@@ -1,4 +1,4 @@
-# Art Design Pro - Java 后端
+_# Art Design Pro - Java 后端
 
 这是 Art Design Pro 的 Java 后端服务，Art Design Pro 是一个注重用户体验和快速开发的综合管理系统。
 
@@ -42,4 +42,4 @@ java -jar target/app.jar
 
 ## 许可证
 
-本项目采用 MIT 许可证 - 详情请查看 LICENSE 文件
+本项目采用 MIT 许可证 - 详情请查看 LICENSE 文件_

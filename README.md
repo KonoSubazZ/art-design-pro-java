@@ -1,45 +1,45 @@
-# Art Design Pro - Java Backend
+# Art Design Pro - Java 后端
 
-This is the Java backend service for Art Design Pro, a comprehensive admin management system focused on excellent user experience and rapid development.
+这是 Art Design Pro 的 Java 后端服务，Art Design Pro 是一个注重用户体验和快速开发的综合管理系统。
 
-## Overview
+## 概述
 
-Art Design Pro Java Backend provides the server-side implementation that powers the Art Design Pro admin system. It's built to support all the frontend features while maintaining high performance and security standards.
+Art Design Pro Java 后端提供了为 Art Design Pro 管理系统提供动力的服务器端实现。它旨在支持所有前端功能，同时保持高性能和安全标准。
 
-## Frontend Repository
+## 前端仓库
 
-The corresponding frontend repository can be found at:
+对应的前端仓库可以在以下地址找到：
 [https://github.com/anganing/art-design-pro-iboot](https://github.com/anganing/art-design-pro-iboot)
 
-## Features
+## 特性
 
-- RESTful API implementation
-- Secure authentication and authorization
-- Database integration and management
-- Business logic implementation
-- Performance optimization
+- RESTful API 实现
+- 安全的身份验证和授权
+- 数据库集成和管理
+- 业务逻辑实现
+- 性能优化
 
-## Installation and Setup
+## 安装和设置
 
-1. Clone this repository
-2. Configure your database settings
-3. Build and run the application
+1. 克隆此仓库
+2. 配置数据库设置
+3. 构建并运行应用
 
 ```bash
-# Build the project
+# 构建项目
 mvn clean package
 
-# Run the application
+# 运行应用
 java -jar target/app.jar
 ```
 
-## Technologies
+## 技术栈
 
 - Java
 - Spring Boot
 - Maven
 - SQLite\PostgreSQL\MySQL
 
-## License
+## 许可证
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+本项目采用 MIT 许可证 - 详情请查看 LICENSE 文件

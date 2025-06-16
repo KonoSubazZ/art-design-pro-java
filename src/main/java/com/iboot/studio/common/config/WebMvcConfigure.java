@@ -28,7 +28,7 @@ import cn.dev33.satoken.fun.strategy.SaCorsHandleFunction;
 import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.router.SaRouter;
 import com.iboot.studio.common.config.log.RequestIdInterceptor;
-import com.iboot.studio.infrastructure.integration.satoken.PermissionInterceptor;
+import com.iboot.studio.infrastructure.integration.satoken.SaPermissionInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,19 +40,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfigure implements WebMvcConfigurer {
 
   private final RequestIdInterceptor requestIdInterceptor;
-  private final PermissionInterceptor permissionInterceptor;
+  private final SaPermissionInterceptor saPermissionInterceptor;
 
   public WebMvcConfigure(
-      RequestIdInterceptor requestIdInterceptor, PermissionInterceptor permissionInterceptor) {
+      RequestIdInterceptor requestIdInterceptor, SaPermissionInterceptor saPermissionInterceptor) {
     this.requestIdInterceptor = requestIdInterceptor;
-    this.permissionInterceptor = permissionInterceptor;
+    this.saPermissionInterceptor = saPermissionInterceptor;
   }
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     // 注册请求ID拦截器
     registry.addInterceptor(requestIdInterceptor);
-    registry.addInterceptor(permissionInterceptor);
+    registry.addInterceptor(saPermissionInterceptor);
   }
 
   @Bean

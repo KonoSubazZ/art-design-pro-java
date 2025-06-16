@@ -26,53 +26,44 @@ package com.iboot.studio.infrastructure.integration.satoken;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.router.SaRouter;
-import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
-public class PermissionInterceptor extends SaInterceptor {
+public class SaPermissionInterceptor extends SaInterceptor {
+  /*public static final List<String> OPEN_RESOURCES =
+  List.of(
+      "/",
+      "/api/iboot/sys/public/**",
+      "/api/iboot/auth/login",
+      "/api/iboot/auth/logout",
+      // 排除静态资源目录
+      "/static/**",
+      "/assets/**",
+      "/iboot/**",
+      // 排除根目录下的静态文件
+      "/*.js",
+      "/*.css",
+      "/*.html",
+      "/*.ico",
+      "/*.png",
+      "/*.jpg",
+      "/*.jpeg",
+      "/*.gif",
+      "/*.svg",
+      "/*.woff",
+      "/*.woff2",
+      "/*.ttf",
+      "/*.json");*/
 
-  public static final List<String> OPEN_RESOURCES =
-      List.of(
-          "/",
-          "/api/iboot/sys/public/data-config",
-          "/api/iboot/auth/login",
-          "/api/iboot/auth/logout",
-          // 排除静态资源目录
-          "/static/**",
-          "/assets/**",
-          "/iboot/**",
-          // 排除根目录下的静态文件
-          "/*.js",
-          "/*.css",
-          "/*.html",
-          "/*.ico",
-          "/*.png",
-          "/*.jpg",
-          "/*.jpeg",
-          "/*.gif",
-          "/*.svg",
-          "/*.woff",
-          "/*.woff2",
-          "/*.ttf",
-          "/*.json");
-
-  public PermissionInterceptor() {
+  public SaPermissionInterceptor(
+      SaPermissionProcessor processor, SaExtensionProperties properties) {
     super(
         handler -> {
-          // 指定一条 match 规则
-          SaRouter
-              // 拦截的 path 列表，可以写多个 */
-              .match("/**")
-              // 不拦截以下接口（sa-token 不用加 serverContextPath 前缀但需要 / 开头）
-              .notMatch(OPEN_RESOURCES)
-              // 要执行的校验动作，可以写完整的 lambda 表达式
-              .check(r -> StpUtil.checkLogin());
-
-          // 配置权限认证规则
-          SaRouter.match("/user/**", r -> StpUtil.checkPermission("user"));
+          if (properties.getEnabled()) {
+            SaRouter.match("/**")
+                .notMatch(properties.getOpenResources())
+                .check(r -> processor.process());
+          }
         });
   }
 }

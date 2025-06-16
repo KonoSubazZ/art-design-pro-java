@@ -43,7 +43,7 @@ import org.springframework.util.Assert;
 /** 权限加载接口实现类，保证此类被 SpringBoot 扫描，完成 Sa-Token 的自定义权限验证扩展 */
 @Component
 @RequiredArgsConstructor
-public class PermissionImpl implements StpInterface {
+public class SaPermissionImpl implements StpInterface {
   private final UserService userService;
   private final ResourceService resourceService;
   private final RoleService roleService;

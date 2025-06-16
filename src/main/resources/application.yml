@@ -5,7 +5,7 @@ iboot-studio:
     scan-packages: com.iboot.studio.common.constant,com.iboot.studio.other.package
   log:
     aop:
-      enabled: true
+      enabled: false
       pointcut:
         value: "execution(* com.iboot.studio.web.controller..*.*(..))"
 
@@ -13,9 +13,9 @@ spring:
   application:
     name: iboot-studio
   datasource:
-      hikari:
-        connection-test-query: SELECT 1 # 数据库连接测试
-        connection-init-sql: select  1 # 数据库连接测试
+    hikari:
+      connection-test-query: SELECT 1 # 数据库连接测试
+      connection-init-sql: select  1 # 数据库连接测试
   aop:
     auto: true  # 确保AOP自动配置启用
     proxy-target-class: true  # 使用CGLIB代理
@@ -44,6 +44,32 @@ sa-token:
   token-style: simple-uuid
   # 是否输出操作日志
   is-log: true
+  extension:
+    enabled: true
+    open-resources:
+      - /
+      - /api/iboot/sys/public/**
+      - /api/iboot/auth/login
+      - /api/iboot/auth/logout
+      # // 排除静态资源目录（sa-token 不用加 serverContextPath 前缀但需要 / 开头）
+      - /static/**
+      - /assets/**
+      - /iboot/**
+      # // 排除根目录下的静态文件（sa-token 不用加 serverContextPath 前缀但需要 / 开头）
+      - /*.js
+      - /*.css
+      - /*.html
+      - /*.ico
+      - /*.png
+      - /*.jpg
+      - /*.jpeg
+      - /*.gif
+      - /*.svg
+      - /*.woff
+      - /*.woff2
+      - /*.ttf
+      - /*.json
+    demo-mode: false
 
 concept:
   download:
