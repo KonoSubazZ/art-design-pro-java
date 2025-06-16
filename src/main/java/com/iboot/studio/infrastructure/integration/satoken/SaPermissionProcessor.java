@@ -6,8 +6,10 @@ import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.router.SaRouterStaff;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollUtil;
-import java.util.List;
+import com.google.common.collect.Lists;
+import com.iboot.studio.common.exception.DemoModeException;
 import java.util.Objects;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -26,10 +28,10 @@ public class SaPermissionProcessor {
     }
 
     SaRouterStaff saRouterStaff = SaRouter.match("/**");
-	  List<String> excludes = properties.getExcludes();
+	  Set<String> excludes = properties.getExcludes();
 	  if (CollUtil.isNotEmpty(excludes)) {
-			// 排除不需要权限校验的资源
-      saRouterStaff.notMatch(excludes);
+      // 排除不需要权限校验的资源
+      saRouterStaff.notMatch(Lists.newArrayList(excludes));
     }
     saRouterStaff.check(
         r -> {
@@ -50,5 +52,9 @@ public class SaPermissionProcessor {
 		System.out.println("requestPath = " + requestPath);
     String requestMethod = request.getMethod();
     System.out.println("requestMethod = " + requestMethod);
+
+		if (properties.getDemoMode() && !"GET".equals(requestMethod) && !properties.getDemoModeIncludes().contains(requestPath)) {
+			throw new DemoModeException();
+		}
   }
 }
