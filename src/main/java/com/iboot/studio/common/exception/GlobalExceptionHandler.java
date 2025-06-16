@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(NotLoginException.class)
   @ResponseStatus(HttpStatus.OK)
   public R<Void> handleNotLoginException(NotLoginException e) {
-    log.error("资源未找到异常", e);
+    log.error("token失效", e);
     return R.failed(ResponseCode.UNAUTHORIZED, "未登录或登录失效", ExceptionUtils.getStackTrace(e), null);
   }
 
