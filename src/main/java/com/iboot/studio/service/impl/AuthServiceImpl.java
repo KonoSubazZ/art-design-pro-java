@@ -92,8 +92,7 @@ public class AuthServiceImpl implements AuthService {
   @Override
   public UserTokenInfo getUserInfo() {
     // 获取当前账户登录信息
-    SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
-    String userId = tokenInfo.getLoginId().toString();
+    String userId = StpUtil.getLoginIdAsString();
     User user = userService.getById(userId);
 
     // 准备返回用户信息及token
@@ -105,7 +104,7 @@ public class AuthServiceImpl implements AuthService {
 
   @Override
   public void logout() {
-    Object loginId = StpUtil.getLoginId();
+    String loginId = StpUtil.getLoginIdAsString();
     StpUtil.logout(loginId);
   }
 }

@@ -25,8 +25,9 @@
 package com.iboot.studio.web.vo;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
-import java.util.List;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class UserTokenInfo {

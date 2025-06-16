@@ -19,7 +19,7 @@ public class UserUtil {
   }
 
   public static User getCurrentUser() {
-    Object loginId = StpUtil.getLoginId();
+    String loginId = StpUtil.getLoginIdAsString();
     if (Objects.isNull(loginId)) {
       // 返回系统管理员
       User user = new User();
@@ -29,6 +29,6 @@ public class UserUtil {
       return user;
     }
     UserService userService = SpringUtil.getBean(UserService.class);
-    return userService.getById(loginId.toString());
+    return userService.getById(loginId);
   }
 }

@@ -63,8 +63,8 @@ public class SaPermissionProcessor {
     }
 
     // 权限校验
-    Object loginId = StpUtil.getLoginId();
-    User user = userService.getById(loginId.toString());
+    String loginId = StpUtil.getLoginIdAsString();
+    User user = userService.getById(loginId);
     if (user.getIsSuperAdmin()) {
       // 超级管理员不需要权限校验
       return;
