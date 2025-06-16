@@ -31,3 +31,11 @@ spring:
   datasource:
     url: jdbc:sqlite:/app/database/iboot.db
     driver-class-name: org.sqlite.JDBC
+
+sa-token:
+  extension:
+    demo-mode: true
+    # 演示模式下运行操作的 非 GET 资源请求
+    demo-mode-includes:
+      - /api/iboot/auth/login
+      - /api/iboot/auth/logout
