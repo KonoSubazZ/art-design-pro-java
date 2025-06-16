@@ -1,0 +1,1 @@
+import{a as t}from"./index-BHy-qhsq.js";class s{static getDataByKey(s){return t.get({url:"/sys/public/data-config",params:s,requestOptions:{withToken:!1}})}static getOptions(s){return t.get({url:"/enums/options",params:s})}}export{s as S};
