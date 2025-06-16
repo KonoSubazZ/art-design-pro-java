@@ -47,13 +47,6 @@ public class SaPermissionProcessor {
   private void performPermissionCheck() {
     // 登录校验
     StpUtil.checkLogin();
-    // 权限校验
-    Object loginId = StpUtil.getLoginId();
-    User user = userService.getById(loginId.toString());
-    if (user.getIsSuperAdmin()) {
-      // 超级管理员不需要权限校验
-      return;
-    }
     checkPermission();
   }
 
@@ -70,6 +63,14 @@ public class SaPermissionProcessor {
 	  boolean demoModeRequest = isDemoModeRequest(requestMethod, requestPath);
 	  if (demoModeRequest) {
       throw new DemoModeException("演示模式禁止操作");
+    }
+
+    // 权限校验
+    Object loginId = StpUtil.getLoginId();
+    User user = userService.getById(loginId.toString());
+    if (user.getIsSuperAdmin()) {
+      // 超级管理员不需要权限校验
+      return;
     }
 
 		String resourceCode = MenuUtil.requestPath2ResourceCode(requestPath);
