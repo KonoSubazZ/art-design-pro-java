@@ -42,11 +42,14 @@ sa-token:
   is-share: false
   # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
   token-style: simple-uuid
+  # 是否打开自动续签（如果此值为 true，框架会在每次直接或间接调用 getLoginId() 时进行一次过期检查与续签操作）
+  auto-renew: true
   # 是否输出操作日志
   is-log: true
   extension:
     enabled: true
-    open-resources:
+    # 无需登录或者权限控制的资源
+    excludes:
       - /
       - /api/iboot/sys/public/**
       - /api/iboot/auth/login

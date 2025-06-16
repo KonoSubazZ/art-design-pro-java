@@ -25,45 +25,11 @@
 package com.iboot.studio.infrastructure.integration.satoken;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
-import cn.dev33.satoken.router.SaRouter;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SaPermissionInterceptor extends SaInterceptor {
-  /*public static final List<String> OPEN_RESOURCES =
-  List.of(
-      "/",
-      "/api/iboot/sys/public/**",
-      "/api/iboot/auth/login",
-      "/api/iboot/auth/logout",
-      // 排除静态资源目录
-      "/static/**",
-      "/assets/**",
-      "/iboot/**",
-      // 排除根目录下的静态文件
-      "/*.js",
-      "/*.css",
-      "/*.html",
-      "/*.ico",
-      "/*.png",
-      "/*.jpg",
-      "/*.jpeg",
-      "/*.gif",
-      "/*.svg",
-      "/*.woff",
-      "/*.woff2",
-      "/*.ttf",
-      "/*.json");*/
-
-  public SaPermissionInterceptor(
-      SaPermissionProcessor processor, SaExtensionProperties properties) {
-    super(
-        handler -> {
-          if (properties.getEnabled()) {
-            SaRouter.match("/**")
-                .notMatch(properties.getOpenResources())
-                .check(r -> processor.process());
-          }
-        });
+  public SaPermissionInterceptor(SaPermissionProcessor processor) {
+    super(handler -> processor.process());
   }
 }

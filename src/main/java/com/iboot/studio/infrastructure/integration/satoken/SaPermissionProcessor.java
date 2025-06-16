@@ -2,32 +2,53 @@ package com.iboot.studio.infrastructure.integration.satoken;
 
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.router.SaRouter;
+import cn.dev33.satoken.router.SaRouterStaff;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.collection.CollUtil;
+import java.util.List;
+import java.util.Objects;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-
-/**
- * 权限处理器
- */
+/** 权限处理器 */
 @Component
 @EnableConfigurationProperties(SaExtensionProperties.class)
+@RequiredArgsConstructor
 public class SaPermissionProcessor {
-	public void process() {
-		// 登录校验
-		StpUtil.checkLogin();
-		// 权限校验
-		SaRequest request = SaHolder.getRequest();
-		if (Objects.isNull(request)) {
-			// 非 http 请求放行避免空指针异常
-			return;
-		}
-		// 请求路径
-		String requestPath = request.getRequestPath();
-		// 请求方式
-		String requestMethod = request.getMethod();
-    System.out.println("requestPath = " + requestPath);
+  private final SaExtensionProperties properties;
+
+  public void process() {
+    if (!properties.getEnabled()) {
+      // 未启用权限校验
+      return;
+    }
+
+    SaRouterStaff saRouterStaff = SaRouter.match("/**");
+	  List<String> excludes = properties.getExcludes();
+	  if (CollUtil.isNotEmpty(excludes)) {
+			// 排除不需要权限校验的资源
+      saRouterStaff.notMatch(excludes);
+    }
+    saRouterStaff.check(
+        r -> {
+          // 登录校验
+          StpUtil.checkLogin();
+          // 权限校验
+          checkPermission();
+        });
+  }
+
+  private void checkPermission() {
+    SaRequest request = SaHolder.getRequest();
+    if (Objects.isNull(request)) {
+      // 非 http 请求放行避免空指针异常
+      return;
+    }
+    String requestPath = request.getRequestPath();
+		System.out.println("requestPath = " + requestPath);
+    String requestMethod = request.getMethod();
     System.out.println("requestMethod = " + requestMethod);
-	}
+  }
 }
