@@ -35,6 +35,7 @@ import com.iboot.studio.service.ResourceService;
 import com.iboot.studio.service.RoleService;
 import com.iboot.studio.service.UserService;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -47,11 +48,16 @@ public class SaPermissionImpl implements StpInterface {
   private final UserService userService;
   private final ResourceService resourceService;
   private final RoleService roleService;
+  private final SaExtensionProperties saExtensionProperties;
 
   @Override
   public List<String> getPermissionList(Object loginId, String loginType) {
-    // 该账户所具有的权限码
     List<String> permissionList = Lists.newArrayList();
+    Set<String> basicPermissions = saExtensionProperties.getBasicPermissions();
+    if (CollUtil.isNotEmpty(basicPermissions)) {
+      permissionList.addAll(basicPermissions);
+    }
+    // 该账户所具有的权限码
 
     String userId = Convert.toStr(loginId);
     User user = userService.getById(userId);
@@ -60,22 +66,27 @@ public class SaPermissionImpl implements StpInterface {
     if (user.getIsSuperAdmin()) {
       // 超级管理员返回所有的权限
       List<Resource> resources = resourceService.list();
-      permissionList =
-          resources.stream().map(Resource::getResourceCode).collect(Collectors.toList());
-      return CollUtil.isNotEmpty(permissionList) ? permissionList : Lists.newArrayList();
+      List<String> userPermissionList = resources.stream().map(Resource::getResourceCode).collect(Collectors.toList());
+	    if (CollUtil.isNotEmpty(userPermissionList)) {
+		    permissionList.addAll(userPermissionList);
+	    }
+      return permissionList;
     }
 
     // 获取角色列表
     List<String> roleList = this.getRoleList(userId, loginType);
     if (CollUtil.isEmpty(roleList)) {
-      // 用户没有角色返回空集合权限码
+      // 用户没有角色返回基础权限码集合
       return permissionList;
     }
 
     // 获取角色所具有的权限码
     List<Resource> resources = resourceService.listByRoleList(roleList);
-    permissionList = resources.stream().map(Resource::getResourceCode).collect(Collectors.toList());
-    return CollUtil.isNotEmpty(permissionList) ? permissionList : Lists.newArrayList();
+    List<String> userPermissionList = resources.stream().map(Resource::getResourceCode).collect(Collectors.toList());
+    if (CollUtil.isNotEmpty(userPermissionList)) {
+      permissionList.addAll(userPermissionList);
+    }
+    return permissionList;
   }
 
   @Override

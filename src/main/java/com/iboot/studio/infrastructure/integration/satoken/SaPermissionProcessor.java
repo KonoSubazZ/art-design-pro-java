@@ -33,29 +33,27 @@ public class SaPermissionProcessor {
       log.warn("权限校验未启用");
       return;
     }
-
+    // 先拦截所以路径
     SaRouterStaff saRouterStaff = SaRouter.match("/**");
     Set<String> excludes = properties.getExcludes();
     if (CollUtil.isNotEmpty(excludes)) {
       // 排除不需要权限校验的资源
       saRouterStaff.notMatch(Lists.newArrayList(excludes));
     }
-
+    // 进行权限检查
     saRouterStaff.check(this::performPermissionCheck);
   }
 
   private void performPermissionCheck() {
     // 登录校验
     StpUtil.checkLogin();
-
+    // 权限校验
     Object loginId = StpUtil.getLoginId();
     User user = userService.getById(loginId.toString());
     if (user.getIsSuperAdmin()) {
       // 超级管理员不需要权限校验
       return;
     }
-
-    // 权限校验
     checkPermission();
   }
 
@@ -76,14 +74,14 @@ public class SaPermissionProcessor {
 
 		String resourceCode = MenuUtil.requestPath2ResourceCode(requestPath);
 	  boolean hasPermission = StpUtil.hasPermission(resourceCode);
-		if (!hasPermission && !properties.getBasicPermissions().contains(resourceCode)) {
+		if (!hasPermission) {
       throw new UnauthorizedException("权限不足");
     }
   }
 
   private boolean isDemoModeRequest(String requestMethod, String requestPath) {
-    return properties.getDemoMode()
-        && !"GET".equals(requestMethod)
+    return properties.getDemoMode() 
+        && !"GET".equals(requestMethod) 
         && !properties.getDemoModeIncludes().contains(requestPath);
   }
 }
