@@ -1,7 +1,7 @@
 [中文](README.md) | [English](README.en.md)
 # Iboot Studio —— Java Enterprise Backend Management System
 
-This is a "simple but not simple" Java enterprise backend management system.
+This is a "simple but not simple" Java enterprise backend management system. Example website: [www.art-design-pro.iboot.top](http://117.72.212.138:18080/)
 
 ## Overview
 
@@ -118,6 +118,23 @@ iboot-studio
 ├── .gitignore                         # Git ignore configuration
 └── .gitattributes                     # Git attributes configuration
 ```
+
+## Document
+The project documentation will be updated on the following platforms (priority: WeChat Official Account, other platforms based on time):
+- ![iboot WeChat Official Account](src/main/resources/static/iboot/iboot_wx_pub.jpg)
+- [Juejin](https://juejin.cn/user/1234567890)
+- [iboot Website](http://www.iboot.top)
+- [iboot Blog](http://www.blog.iboot.top)
+
+## Contribution
+Welcome to contribute code, please refer to the [develop.md](develop.md) document and [.style](.style) code style configuration.
+
+## Sponsorship
+Your sponsorship will be used to maintain website operation, system maintenance, document updates, project maintenance, etc., thank you for your support!
+
+| WeChat Pay | Alipay |
+|:---:|:---:|
+| <img src="/payment/微信支付.jpg" alt="微信支付" width="200" height="200"> | <img src="/payment/支付宝.jpg" alt="支付宝" width="200" height="200"> |
 
 ## License
 

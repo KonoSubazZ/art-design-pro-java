@@ -1,7 +1,7 @@
 [中文](README.md) | [English](README.en.md)
 # Iboot Studio —— Java企业级后台管理系统
 
-这是一个说简单但是又不“简单的” Java 企业级后台管理系统。
+这是一个说简单但是又不"简单的" Java 企业级后台管理系统。示例网站：[www.art-design-pro.iboot.top](http://117.72.212.138:18080/)
 
 ## 概述
 
@@ -119,6 +119,23 @@ iboot-studio
 ├── .gitignore                         # Git 忽略文件配置
 └── .gitattributes                     # Git 属性配置文件
 ```
+
+## 文档
+后续项目文档更新将会在以下平台发布（优先：微信公众号，其他平台看时间）：
+- ![iboot微信公众号](src/main/resources/static/iboot/iboot_wx_pub.jpg)
+- [掘金](https://juejin.cn/user/1234567890)
+- [iboot官网](http://www.iboot.top)
+- [iboot博客](http://www.blog.iboot.top)
+
+## 贡献
+欢迎贡献代码，请参考 [develop.md](develop.md) 文档及[.style](.style) 代码风格配置。
+
+## 赞助
+你的赞助将用于维护网站运行、系统维护、文档更新、项目维护等，感谢你的支持！
+
+| 微信支付 | 支付宝 |
+|:---:|:---:|
+| <img src="/payment/微信支付.jpg" alt="微信支付" width="200" height="200"> | <img src="/payment/支付宝.jpg" alt="支付宝" width="200" height="200"> |
 
 ## 许可证
 
