@@ -12,7 +12,7 @@ ARG JAR_FILE
 COPY ${JAR_FILE} app.jar
 
 # 默认不打包 SQLite 数据库文件 需自行挂载 /app/database/iboot.db
- COPY database/iboot.db  /app/database/iboot.db
+ COPY database/iboot.db  /app/database/
 
 # 暴露端口
 EXPOSE 18080
