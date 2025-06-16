@@ -122,7 +122,7 @@ iboot-studio
 ## Document
 The project documentation will be updated on the following platforms (priority: WeChat Official Account, other platforms based on time):
 - ![iboot WeChat Official Account](src/main/resources/static/iboot/iboot_wx_pub.jpg)
-- [Juejin](https://juejin.cn/user/1234567890)
+- [Juejin](https://juejin.cn/user/2928754709504893)
 - [iboot Website](http://www.iboot.top)
 - [iboot Blog](http://www.blog.iboot.top)
 

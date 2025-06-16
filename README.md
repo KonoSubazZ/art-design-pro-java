@@ -123,7 +123,7 @@ iboot-studio
 ## 文档
 后续项目文档更新将会在以下平台发布（优先：微信公众号，其他平台看时间）：
 - ![iboot微信公众号](src/main/resources/static/iboot/iboot_wx_pub.jpg)
-- [掘金](https://juejin.cn/user/1234567890)
+- [掘金](https://juejin.cn/user/2928754709504893)
 - [iboot官网](http://www.iboot.top)
 - [iboot博客](http://www.blog.iboot.top)
 
