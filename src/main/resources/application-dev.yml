@@ -33,4 +33,4 @@ spring:
     driver-class-name: org.sqlite.JDBC
 sa-token:
   extension:
-    enabled: false
+    enabled: true
