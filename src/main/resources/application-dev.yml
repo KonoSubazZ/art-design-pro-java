@@ -31,3 +31,6 @@ spring:
   datasource:
     url: jdbc:sqlite:database/iboot.db
     driver-class-name: org.sqlite.JDBC
+sa-token:
+  extension:
+    enabled: false
