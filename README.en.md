@@ -132,9 +132,9 @@ Welcome to contribute code, please refer to the [develop.md](develop.md) documen
 ## Sponsorship
 Your sponsorship will be used to maintain website operation, system maintenance, document updates, project maintenance, etc., thank you for your support!
 
-| WeChat Pay | Alipay |
-|:---:|:---:|
-| <img src="/payment/微信支付.jpg" alt="微信支付" width="200" height="200"> | <img src="/payment/支付宝.jpg" alt="支付宝" width="200" height="200"> |
+|                 WeChat Pay                 |                  Alipay                  |
+|:------------------------------------------:|:----------------------------------------:|
+| <img src="/payment/微信支付.jpg" alt="微信支付" /> | <img src="/payment/支付宝.jpg" alt="支付宝" /> |
 
 ## License
 
