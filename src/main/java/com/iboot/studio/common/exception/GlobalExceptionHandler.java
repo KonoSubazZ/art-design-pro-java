@@ -24,6 +24,7 @@
 
 package com.iboot.studio.common.exception;
 
+import cn.dev33.satoken.exception.NotLoginException;
 import com.iboot.studio.common.constant.R;
 import com.iboot.studio.common.constant.ResponseCode;
 import java.util.List;
@@ -48,6 +49,14 @@ public class GlobalExceptionHandler {
   public R<Void> handleNotFoundException(NotFoundException e) {
     log.error("资源未找到异常", e);
     return R.failed(ResponseCode.NOT_FOUND, "资源未找到", ExceptionUtils.getStackTrace(e), null);
+  }
+
+  /** 未登录 */
+  @ExceptionHandler(NotLoginException.class)
+  @ResponseStatus(HttpStatus.OK)
+  public R<Void> handleNotLoginException(NotLoginException e) {
+    log.error("资源未找到异常", e);
+    return R.failed(ResponseCode.UNAUTHORIZED, "未登录或登录失效", ExceptionUtils.getStackTrace(e), null);
   }
 
   /** 处理空指针异常 */
