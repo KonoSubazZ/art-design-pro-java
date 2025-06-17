@@ -124,7 +124,7 @@ The project documentation will be updated on the following platforms (priority: 
 - ![iboot WeChat Official Account](src/main/resources/static/iboot/iboot_wx_pub.jpg)
 - [Juejin](https://juejin.cn/user/2928754709504893)
 - [iboot Website](http://www.iboot.top)
-- [iboot Blog](http://www.blog.iboot.top)
+- [iboot Blog](http://blog.iboot.top)
 
 ## Contribution
 Welcome to contribute code, please refer to the [develop.md](develop.md) document and [.style](.style) code style configuration.
