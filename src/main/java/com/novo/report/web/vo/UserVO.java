@@ -11,7 +11,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class UserVO extends BaseEntity {
-  private String userId;
+  private Long userId;
 
   private String userName;
 

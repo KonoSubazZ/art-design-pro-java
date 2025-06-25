@@ -109,8 +109,7 @@ concept:
         enabled: true #时间计算日志是否启用
 
 mybatis-plus:
-#  mapper-locations: classpath*:/mapper/**.xml
-  mapper-locations: classpath*:/com/novo/report/mapper/**.xml
+  mapper-locations: classpath*:/mapper/**.xml
   configuration:
     # MyBatis 配置
     map-underscore-to-camel-case: true

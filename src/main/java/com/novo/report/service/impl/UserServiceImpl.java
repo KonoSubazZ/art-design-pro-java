@@ -76,7 +76,7 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
       String hashedPassword =
           BCrypt.hashpw(DigestUtil.sha256Hex(defaultPassword), BCrypt.gensalt(userDTO.getUserName().length()));
       bean.setPassword(hashedPassword);
-      bean.setUserId(IdUtil.getMonotonicUlid());
+//      bean.setUserId(IdUtil.getMonotonicUlid());
     } else {
       // 判断是否是修改用户名是不是已经存在
       Assert.isTrue(Objects.equals(bean.getUserId(), userDTO.getUserId()), "用户名已存在");

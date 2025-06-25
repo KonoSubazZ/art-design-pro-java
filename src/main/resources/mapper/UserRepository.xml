@@ -19,7 +19,7 @@
         <result property="updaterId" column="updater_id"/>
         <result property="updaterName" column="updater_name"/>
         <result property="updateTime" column="update_time"/>
-        <collection property="roleIds" ofType="string">
+        <collection property="roleIds" ofType="String">
             <result column="role_id"/>
         </collection>
     </resultMap>
