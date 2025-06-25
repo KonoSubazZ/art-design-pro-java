@@ -2,20 +2,20 @@ iboot-studio:
   show-server-url: true
   enum-dict:
     enabled: true
-    scan-packages: com.iboot.studio.common.constant,com.iboot.studio.other.package
+    scan-packages: com.novo.report.common.constant,com.novo.report.other.package
   log:
     aop:
       enabled: false
       pointcut:
-        value: "execution(* com.iboot.studio.web.controller..*.*(..))"
+        value: "execution(* com.novo.report.web.controller..*.*(..))"
 
 spring:
   application:
-    name: iboot-studio
+    name: novo-report
   datasource:
     hikari:
-      connection-test-query: SELECT 1 # 数据库连接测试
-      connection-init-sql: select  1 # 数据库连接测试
+      # connection-test-query: SELECT 1 # 数据库连接测试
+      # connection-init-sql: select  1 # 数据库连接测试
   aop:
     auto: true  # 确保AOP自动配置启用
     proxy-target-class: true  # 使用CGLIB代理
@@ -109,7 +109,8 @@ concept:
         enabled: true #时间计算日志是否启用
 
 mybatis-plus:
-  mapper-locations: classpath*:/mapper/**.xml
+#  mapper-locations: classpath*:/mapper/**.xml
+  mapper-locations: classpath*:/com/novo/report/mapper/**.xml
   configuration:
     # MyBatis 配置
     map-underscore-to-camel-case: true

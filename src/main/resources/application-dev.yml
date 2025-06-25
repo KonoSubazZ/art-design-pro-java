@@ -29,8 +29,10 @@ minioplus:
 
 spring:
   datasource:
-    url: jdbc:sqlite:database/iboot.db
-    driver-class-name: org.sqlite.JDBC
+    url: jdbc:mysql://172.20.1.34:8806/novo_report_pro?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=false
+    username: novo
+    password: GodIsLove
+    driver-class-name: com.mysql.jdbc.Driver  # 5.x驱动类名
 sa-token:
   extension:
     enabled: true
