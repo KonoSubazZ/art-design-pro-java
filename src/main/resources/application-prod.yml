@@ -41,6 +41,7 @@ sa-token:
     demo-mode-includes:
       - /api/iboot/auth/login
       - /api/iboot/auth/logout
+
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl

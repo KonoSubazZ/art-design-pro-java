@@ -36,7 +36,7 @@ public class SqLogInterceptor implements InnerInterceptor {
 
   /** 日期格式化器（线程安全） */
   private static final DateTimeFormatter DATE_FORMATTER =
-          DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
   /** 问号占位符 */
   private static final String QUESTION_MARK = "?";
@@ -46,7 +46,7 @@ public class SqLogInterceptor implements InnerInterceptor {
 
   @Override
   public void beforePrepare(
-          StatementHandler statementHandler, Connection connection, Integer transactionTimeout) {
+      StatementHandler statementHandler, Connection connection, Integer transactionTimeout) {
     // 如果未启用SQL日志，直接返回
     if (!mybatisPlusSqLogProperties.isEnabled()) {
       return;
@@ -55,7 +55,7 @@ public class SqLogInterceptor implements InnerInterceptor {
     // 获取SQL相关信息
     MetaObject metaObject = SystemMetaObject.forObject(statementHandler);
     MappedStatement mappedStatement =
-            (MappedStatement) metaObject.getValue("delegate.mappedStatement");
+        (MappedStatement) metaObject.getValue("delegate.mappedStatement");
     BoundSql boundSql = statementHandler.getBoundSql();
 
     // 获取SQL语句
@@ -87,7 +87,7 @@ public class SqLogInterceptor implements InnerInterceptor {
 
   /** 处理SQL语句：格式化并替换参数 */
   private String processSql(
-          MappedStatement mappedStatement, BoundSql boundSql, String originalSql) {
+      MappedStatement mappedStatement, BoundSql boundSql, String originalSql) {
     // 格式化SQL（如果启用）
     String sql = mybatisPlusSqLogProperties.isFormatSql() ? formatSql(originalSql) : originalSql;
 
@@ -102,15 +102,15 @@ public class SqLogInterceptor implements InnerInterceptor {
 
     // 替换参数
     return replaceSqlParameters(
-            mappedStatement.getConfiguration(), boundSql, sql, parameterObject, parameterMappings);
+        mappedStatement.getConfiguration(), boundSql, sql, parameterObject, parameterMappings);
   }
 
   /** 执行SQL并统计时间 */
   private void executeWithTiming(
-          StatementHandler statementHandler,
-          Connection connection,
-          Integer transactionTimeout,
-          StopWatch stopWatch) {
+      StatementHandler statementHandler,
+      Connection connection,
+      Integer transactionTimeout,
+      StopWatch stopWatch) {
     stopWatch.start("执行");
     try {
       InnerInterceptor.super.beforePrepare(statementHandler, connection, transactionTimeout);
@@ -133,11 +133,11 @@ public class SqLogInterceptor implements InnerInterceptor {
 
   /** 替换SQL中的参数占位符 */
   private String replaceSqlParameters(
-          Configuration configuration,
-          BoundSql boundSql,
-          String sql,
-          Object parameterObject,
-          List<ParameterMapping> parameterMappings) {
+      Configuration configuration,
+      BoundSql boundSql,
+      String sql,
+      Object parameterObject,
+      List<ParameterMapping> parameterMappings) {
     TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
     StringBuilder sqlBuilder = new StringBuilder(sql);
     int offset = 0;
@@ -149,7 +149,7 @@ public class SqLogInterceptor implements InnerInterceptor {
 
       // 获取参数值
       Object value =
-              extractParameterValue(boundSql, parameterObject, typeHandlerRegistry, parameterMapping);
+          extractParameterValue(boundSql, parameterObject, typeHandlerRegistry, parameterMapping);
 
       // 替换参数
       offset = replaceParameterPlaceholder(sqlBuilder, value, offset);
@@ -160,10 +160,10 @@ public class SqLogInterceptor implements InnerInterceptor {
 
   /** 提取参数值 */
   private Object extractParameterValue(
-          BoundSql boundSql,
-          Object parameterObject,
-          TypeHandlerRegistry typeHandlerRegistry,
-          ParameterMapping parameterMapping) {
+      BoundSql boundSql,
+      Object parameterObject,
+      TypeHandlerRegistry typeHandlerRegistry,
+      ParameterMapping parameterMapping) {
     String propertyName = parameterMapping.getProperty();
 
     if (boundSql.hasAdditionalParameter(propertyName)) {
