@@ -36,3 +36,6 @@ spring:
 sa-token:
   extension:
     enabled: true
+mybatis-plus:
+  extension:
+  enabled: true

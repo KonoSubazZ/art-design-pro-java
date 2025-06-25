@@ -18,7 +18,7 @@ public class Role extends BaseEntity implements Serializable {
   @TableField(exist = false)
   @Serial private static final long serialVersionUID = 1L;
 
-  @TableId(value = "id", type = IdType.ASSIGN_ID)
+  @TableId(value = "role_id", type = IdType.ASSIGN_ID)
   private String roleId;
 
   @TableField(value = "role_code")

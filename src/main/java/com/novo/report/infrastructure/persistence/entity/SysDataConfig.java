@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 @TableName(value = "sys_data_config")
 public class SysDataConfig extends BaseEntity {
   /** 配置数据ID */
-  @TableId(value = "id", type = IdType.ASSIGN_ID)
+  @TableId(value = "data_id", type = IdType.ASSIGN_ID)
   private String dataId;
 
   /** namespace, 用于隔离不同业务（比如 public的无需登录即可访问） */

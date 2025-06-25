@@ -6,7 +6,7 @@
     <select id="listByUserId" resultType="com.novo.report.infrastructure.persistence.entity.Role">
         SELECT role.*
         FROM sys_role AS role
-                 INNER JOIN sys_role_user AS user_role ON role.id = user_role.role_id
+                 INNER JOIN sys_role_user AS user_role ON role.role_id = user_role.role_id
         WHERE
         user_role.user_id = #{userId}
     </select>

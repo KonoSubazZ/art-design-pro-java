@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.novo.report.infrastructure.persistence.repository.UserRepository">
     <resultMap id="userVOMap" type="com.novo.report.web.vo.UserVO">
-        <id property="userId" column="id"/>
+        <id property="userId" column="user_id"/>
         <result property="userName" column="user_name"/>
         <result property="realName" column="real_name"/>
         <result property="mobile" column="mobile"/>
@@ -25,7 +25,7 @@
     </resultMap>
 
     <select id="getUserPage" resultMap="userVOMap">
-        SELECT u.id,
+        SELECT u.user_id,
                u.user_name,
                u.real_name,
                u.mobile,
@@ -43,6 +43,6 @@
                u.update_time,
                r_u.role_id
         FROM sys_user AS u
-                 LEFT JOIN sys_role_user r_u ON u.id = r_u.user_id
+                 LEFT JOIN sys_role_user r_u ON u.user_id = r_u.user_id
     </select>
 </mapper>

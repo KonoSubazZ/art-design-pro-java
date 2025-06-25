@@ -41,7 +41,7 @@ import lombok.EqualsAndHashCode;
 public class User extends BaseEntity implements Serializable {
   @Serial private static final long serialVersionUID = 1L;
 
-  @TableId(value = "id", type = IdType.ASSIGN_ID)
+  @TableId(value = "user_id", type = IdType.ASSIGN_ID)
   private String userId;
 
   @TableField(value = "user_name")
