@@ -1,8 +1,8 @@
 package com.novo.report.common.config;
 
 import com.novo.report.common.util.JacksonUtil;
-import com.novo.report.infrastructure.persistence.entity.SysDataConfig;
-import com.novo.report.infrastructure.persistence.repository.SysDataConfigRepository;
+import com.novo.report.infrastructure.persistence.entity.system.SysDataConfig;
+import com.novo.report.infrastructure.persistence.repository.system.SysDataConfigRepository;
 import jakarta.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;

@@ -25,7 +25,7 @@
 package com.novo.report.common.util;
 
 import cn.hutool.core.util.StrUtil;
-import com.novo.report.web.vo.RequestLog;
+import com.novo.report.web.system.vo.RequestLog;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;

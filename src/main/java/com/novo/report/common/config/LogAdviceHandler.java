@@ -26,8 +26,8 @@ package com.novo.report.common.config;
 
 import com.novo.report.common.util.JacksonUtil;
 import com.novo.report.common.util.WebUtil;
-import com.novo.report.web.vo.RequestLog;
-import com.novo.report.web.vo.ResponseLog;
+import com.novo.report.web.system.vo.RequestLog;
+import com.novo.report.web.system.vo.ResponseLog;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;

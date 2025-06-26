@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.novo.report.infrastructure.persistence.repository.system.UserRepository">
+    <resultMap id="userVOMap" type="com.novo.report.web.system.vo.UserVO">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="realName" column="real_name"/>
+        <result property="mobile" column="mobile"/>
+        <result property="email" column="email"/>
+        <result property="avatar" column="avatar"/>
+        <result property="gender" column="gender"/>
+        <result property="userStatus" column="user_status"/>
+        <result property="intro" column="intro"/>
+        <result property="isSuperAdmin" column="is_super_admin"/>
+        <result property="creatorId" column="creator_id"/>
+        <result property="creatorName" column="creator_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updaterId" column="updater_id"/>
+        <result property="updaterName" column="updater_name"/>
+        <result property="updateTime" column="update_time"/>
+        <collection property="roleIds" ofType="String">
+            <result column="role_id"/>
+        </collection>
+    </resultMap>
+
+    <select id="getUserPage" resultMap="userVOMap">
+        SELECT u.user_id,
+               u.user_name,
+               u.real_name,
+               u.mobile,
+               u.email,
+               u.avatar,
+               u.gender,
+               u.user_status,
+               u.intro,
+               u.is_super_admin,
+               u.creator_id,
+               u.creator_name,
+               u.create_time,
+               u.updater_id,
+               u.updater_name,
+               u.update_time,
+               r_u.role_id
+        FROM sys_user AS u
+                 LEFT JOIN sys_role_user r_u ON u.user_id = r_u.user_id
+    </select>
+</mapper>

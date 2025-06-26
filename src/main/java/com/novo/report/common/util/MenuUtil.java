@@ -27,8 +27,8 @@ package com.novo.report.common.util;
 import cn.hutool.core.bean.BeanUtil;
 import com.novo.report.common.constant.Const;
 import com.novo.report.common.constant.ResourceTypeEnum;
-import com.novo.report.infrastructure.persistence.entity.Resource;
-import com.novo.report.web.vo.UserMenu;
+import com.novo.report.infrastructure.persistence.entity.system.Resource;
+import com.novo.report.web.system.vo.UserMenu;
 import java.util.*;
 
 public class MenuUtil {

@@ -33,6 +33,7 @@ spring:
     username: novo
     password: GodIsLove
     driver-class-name: com.mysql.jdbc.Driver  # 5.x驱动类名
+
 sa-token:
   extension:
     enabled: true

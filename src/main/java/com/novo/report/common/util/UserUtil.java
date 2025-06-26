@@ -3,8 +3,8 @@ package com.novo.report.common.util;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import cn.hutool.extra.spring.SpringUtil;
-import com.novo.report.infrastructure.persistence.entity.User;
-import com.novo.report.service.UserService;
+import com.novo.report.infrastructure.persistence.entity.system.User;
+import com.novo.report.service.system.UserService;
 import java.util.Objects;
 
 public class UserUtil {

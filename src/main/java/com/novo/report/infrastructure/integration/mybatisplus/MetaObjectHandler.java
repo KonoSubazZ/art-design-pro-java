@@ -27,7 +27,7 @@ package com.novo.report.infrastructure.integration.mybatisplus;
 import cn.hutool.core.lang.func.LambdaUtil;
 import com.novo.report.common.util.UserUtil;
 import com.novo.report.infrastructure.persistence.entity.BaseEntity;
-import com.novo.report.infrastructure.persistence.entity.User;
+import com.novo.report.infrastructure.persistence.entity.system.User;
 import java.time.LocalDateTime;
 
 import org.apache.ibatis.reflection.MetaObject;

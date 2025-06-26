@@ -10,8 +10,8 @@ import com.google.common.collect.Lists;
 import com.novo.report.common.exception.DemoModeException;
 import com.novo.report.common.exception.UnauthorizedException;
 import com.novo.report.common.util.MenuUtil;
-import com.novo.report.infrastructure.persistence.entity.User;
-import com.novo.report.service.UserService;
+import com.novo.report.infrastructure.persistence.entity.system.User;
+import com.novo.report.service.system.UserService;
 import java.util.Objects;
 import java.util.Set;
 
