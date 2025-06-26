@@ -33,20 +33,11 @@ import org.springframework.context.annotation.Bean;
 
 import javax.sql.DataSource;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication
 public class NovoReportApp {
 
   public static void main(String[] args) {
     SpringApplication.run(NovoReportApp.class, args);
   }
-  @Bean
-  public DataSource dataSource() {
-    HikariConfig config = new HikariConfig();
-    config.setJdbcUrl("jdbc:mysql://172.20.1.34:8806/novo_report_pro?useSSL=false&serverTimezone=Asia/Shanghai");
-    config.setUsername("root");
-    config.setPassword("novogene");
-    config.setDriverClassName("com.mysql.jdbc.Driver");  // 与手动加载的类一致
 
-    return new HikariDataSource(config);
-  }
 }
