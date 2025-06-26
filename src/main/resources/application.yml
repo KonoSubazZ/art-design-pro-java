@@ -14,8 +14,8 @@ spring:
     name: novo-report
   datasource:
     hikari:
-      # connection-test-query: SELECT 1 # 数据库连接测试
-      # connection-init-sql: select  1 # 数据库连接测试
+      connection-test-query: SELECT 1 # 数据库连接测试
+      connection-init-sql: select  1 # 数据库连接测试
   aop:
     auto: true  # 确保AOP自动配置启用
     proxy-target-class: true  # 使用CGLIB代理
