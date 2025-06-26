@@ -12,7 +12,7 @@ public class UserUtil {
    * 校验密码是否相同
    * @param sha256Hex SHA256 加密后的16进制字符串密码
    * @param pwdBCrypt BCrypt 加密后的密码
-   * @return
+   * @return true or false
    */
   public static boolean checkIsSamePwd(String sha256Hex, String pwdBCrypt) {
     return BCrypt.checkpw(sha256Hex, pwdBCrypt);
