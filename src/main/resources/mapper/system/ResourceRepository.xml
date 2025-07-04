@@ -5,8 +5,8 @@
     <select id="listByRoleList" resultType="com.novo.report.infrastructure.persistence.entity.system.Resource">
         SELECT DISTINCT resource.*
         FROM sys_resource AS resource
-                 INNER JOIN sys_role_resource AS role_resource ON resource.id = role_resource.resource_id
-                 INNER JOIN sys_role AS role ON role_resource.role_id = role.id
+                 INNER JOIN sys_role_resource AS role_resource ON resource.resource_id = role_resource.resource_id
+                 INNER JOIN sys_role AS role ON role_resource.role_id = role.role_id
         WHERE
         role.role_code IN
         <foreach item="role" collection="roleList" separator="," open="(" close=")">

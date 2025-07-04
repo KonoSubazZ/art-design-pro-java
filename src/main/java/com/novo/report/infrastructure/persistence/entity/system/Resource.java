@@ -41,7 +41,7 @@ import lombok.EqualsAndHashCode;
 public class Resource extends BaseEntity implements Serializable {
   @Serial private static final long serialVersionUID = 1L;
 
-  @TableId(value = "resource_id", type = IdType.ASSIGN_ID)
+  @TableId(value = "resource_id", type = IdType.AUTO)
   private String resourceId;
 
   @TableField(value = "parent_id")

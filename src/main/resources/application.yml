@@ -116,4 +116,4 @@ mybatis-plus:
     # 全局配置
     db-config:
       # 数据库配置
-      id-type: assign_id
+      id-type: auto
