@@ -58,8 +58,8 @@ public class SaPermissionProcessor {
     String requestPath = request.getRequestPath();
     String requestMethod = request.getMethod();
 
-	  boolean demoModeRequest = isDemoModeRequest(requestMethod, requestPath);
-	  if (demoModeRequest) {
+    boolean demoModeRequest = isDemoModeRequest(requestMethod, requestPath);
+    if (demoModeRequest) {
       throw new DemoModeException("演示模式禁止操作");
     }
 
@@ -71,16 +71,16 @@ public class SaPermissionProcessor {
       return;
     }
 
-		String resourceCode = MenuUtil.requestPath2ResourceCode(requestPath);
-	  boolean hasPermission = StpUtil.hasPermission(resourceCode);
-		if (!hasPermission) {
+    String resourceCode = MenuUtil.requestPath2ResourceCode(requestPath);
+    boolean hasPermission = StpUtil.hasPermission(resourceCode);
+    if (!hasPermission) {
       throw new UnauthorizedException("权限不足");
     }
   }
 
   private boolean isDemoModeRequest(String requestMethod, String requestPath) {
-    return properties.getDemoMode() 
-        && !"GET".equals(requestMethod) 
+    return properties.getDemoMode()
+        && !"GET".equals(requestMethod)
         && !properties.getDemoModeIncludes().contains(requestPath);
   }
 }

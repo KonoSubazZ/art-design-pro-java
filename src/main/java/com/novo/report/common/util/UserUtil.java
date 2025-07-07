@@ -23,7 +23,7 @@ public class UserUtil {
     if (Objects.isNull(loginId)) {
       // 返回系统管理员
       User user = new User();
-      user.setUserId("1");
+      user.setUserId(1);
       user.setUserName("admin");
       user.setRealName("系统管理员");
       return user;

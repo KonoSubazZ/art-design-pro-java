@@ -46,7 +46,7 @@ public class MetaObjectHandler implements com.baomidou.mybatisplus.core.handlers
     this.strictInsertFill(
         metaObject,
         LambdaUtil.getFieldName(BaseEntity::getCreatorId),
-        String.class,
+        Integer.class,
         currentUser.getUserId());
     this.strictInsertFill(
         metaObject,
@@ -66,7 +66,7 @@ public class MetaObjectHandler implements com.baomidou.mybatisplus.core.handlers
     this.strictUpdateFill(
         metaObject,
         LambdaUtil.getFieldName(BaseEntity::getUpdaterId),
-        String.class,
+        Integer.class,
         currentUser.getUserId());
     this.strictUpdateFill(
         metaObject,

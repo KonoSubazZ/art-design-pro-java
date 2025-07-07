@@ -36,7 +36,7 @@ import java.util.Set;
 public interface RoleRepository extends BaseMapper<Role> {
 	List<Role> listByUserId(@Param("userId") Object userId);
 
-	void deleteRoleUserByUserId(@Param("userId") String userId);
+	void deleteRoleUserByUserId(@Param("userId") Integer userId);
 
-	void insertRoleUser(@Param("userId") String userId, @Param("roleIds") Set<String> roleIds);
+	void insertRoleUser(@Param("userId") Integer userId, @Param("roleIds") Set<String> roleIds);
 }

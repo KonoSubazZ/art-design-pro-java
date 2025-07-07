@@ -44,7 +44,7 @@ public class User extends BaseEntity implements Serializable {
   @Serial private static final long serialVersionUID = 1L;
 
   @TableId(value = "user_id", type = IdType.AUTO)
-  private String userId;
+  private Integer userId;
 
   @TableField(value = "user_name")
   private String userName;
